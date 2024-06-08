@@ -14,29 +14,6 @@ library(sf)
 library(readr)
 library(shinythemes)
 
-# Load data from database
-# host IP: commented out
-# add config.yaml
-#con <- dbConnect(RPostgres::Postgres(),
-#                 dbname="pathotracer",
-#                 host = "localhost", #host = "13.18.254.11"
-#                 port = 5432,
-#                 user = "postgres", 
-#                 password = "Th30br0m!n3")
-## not used: might pose security risk
-
-# Load the data form csv
-rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data.csv")
-rice_data$year <- as.numeric(rice_data$year)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- trimws(rice_data$AxooPopn)  # Remove any leading/trailing whitespace
-recommended_genes_data <- read_csv("data/recommended_genes.csv")
-#citations <- readRDS("data/latest-data-loading-28May-2024/package_citations.rds")
-genes_frequency_data <- read.csv('data/latest-data-loading-28May-2024/293_IRBBfreq.csv')
-com_xa3_data <- read.csv('data/latest-data-loading-28May-2024/com_xa3.csv')
-
-
 ## Metrics
 total_isolates <- nrow(rice_data)
 total_unique_institutes <- n_distinct(rice_data$institute)
