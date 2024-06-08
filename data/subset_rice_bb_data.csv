@@ -1,0 +1,251 @@
+id,databasecode,samplecode,isolatename,district,province,country,latitude,longitude,year,ricevarsource,ricegrowthstage,percdiseasedleaf,institute,sampletype,runcode,lineage,AxooPopn
+1,XO2020-1-25,RO_2019_25,RUACXO-180008,Peam Ror,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,NA,NA
+2,XO2020-1-27,RO_2019_27,RUACXO-180009,Peam Ror,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,NA,NA
+3,XO2020-1-35,RO_2019_35,RUACXO-180013,Bati,Takeo,Cambodia,10.935392,104.789883,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,NA,NA
+4,XO2020-1-36,RO_2019_36,RUACXO-180013,Bati,Takeo,Cambodia,10.935392,104.789883,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,L2_Unresolved
+5,XO2020-1-38,RO_2019_38,RUACXO-180016,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,L2_Unresolved
+6,XO2020-1-46,RO_2019_46,RUACXO-180024,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,NA,NA
+7,XO2020-1-49,RO_2019_49,RUACXO-180027,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,NA,NA
+8,XO2020-1-175,RO_2019_175,Epi19-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI19,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+9,XO2020-1-5,RO_2019_5,CT2-1,Chau Thanh A,Hau Giang,Vietnam,9.798506,105.637952,2018,OM5451,NA,NA,Cuu Long Delta Rice Research Institute,Leaf-FTA,XO2020-1,Lineage_01,Axoo_01
+10,XO2020-1-9,RO_2019_9,CT3-1,Chau Thanh A,Hau Giang,Vietnam,9.798506,105.637952,2018,OM5451,NA,NA,Cuu Long Delta Rice Research Institute,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+11,XO2020-1-16,RO_2019_16,VT1-4,Vi Thuy,Hau Giang,Vietnam,9.798506,105.637952,2018,ST24,NA,NA,Cuu Long Delta Rice Research Institute,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+12,XO2020-1-26,RO_2019_26,RUACXO-180008,Peam Ror,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+13,XO2020-1-28,RO_2019_28,RUACXO-180009,Peam Ror,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+14,XO2020-1-29,RO_2019_29,RUACXO-180010,Peam Ror,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+15,XO2020-1-30,RO_2019_30,RUACXO-180010,Peam Ror,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+16,XO2020-1-31,RO_2019_31,RUACXO-180011,Bati,Takeo,Cambodia,10.935392,104.789883,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+17,XO2020-1-32,RO_2019_32,RUACXO-180015,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_07
+18,XO2020-1-33,RO_2019_33,RUACXO-180012,Bati,Takeo,Cambodia,10.935392,104.789883,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_01,L1_Unresolved
+19,XO2020-1-34,RO_2019_34,RUACXO-180012,Bati,Takeo,Cambodia,10.935392,104.789883,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+20,XO2020-1-39,RO_2019_39,RUACXO-180017,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+21,XO2020-1-40,RO_2019_40,RUACXO-180018,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_01,L1_Unresolved
+22,XO2020-1-41,RO_2019_41,RUACXO-180018,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+23,XO2020-1-42,RO_2019_42,RUACXO-180021,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+24,XO2020-1-43,RO_2019_43,RUACXO-180019,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_07
+25,XO2020-1-44,RO_2019_44,RUACXO-180022,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+26,XO2020-1-47,RO_2019_47,RUACXO-180025,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_01,L1_Unresolved
+27,XO2020-1-48,RO_2019_48,RUACXO-180026,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_01,L1_Unresolved
+28,XO2020-1-50,RO_2019_50,RUACXO-180028,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Xoc,Xoc
+29,XO2020-1-51,RO_2019_51,RUACXO-180028,Baphnom,Prey Veng,Cambodia,11.36596,105.455728,2018,NA,NA,NA,Royal University of Agriculture,Leaf-FTA,XO2020-1,Lineage_02,Axoo_05
+30,XO2020-1-52,RO_2019_52,BLS1873,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+31,XO2020-1-53,RO_2019_53,BLS1894,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+32,XO2020-1-54,RO_2019_54,BLS1897,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+33,XO2020-1-55,RO_2019_55,BLS1913,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+34,XO2020-1-56,RO_2019_56,BLS1991,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+35,XO2020-1-57,RO_2019_57,BLS2136,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+36,XO2020-1-58,RO_2019_58,BLS2052,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+37,XO2020-1-59,RO_2019_59,BLS2145,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+38,XO2020-1-60,RO_2019_60,BLS2300,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+39,XO2020-1-61,RO_2019_61,BLS2389,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+40,XO2020-1-62,RO_2019_62,BLS2427,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+41,XO2020-1-63,RO_2019_63,BLS2459,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+42,XO2020-1-64,RO_2019_64,BLS2468,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+43,XO2020-1-65,RO_2019_65,BLS2471,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+44,XO2020-1-66,RO_2019_66,BLS1811,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+45,XO2020-1-67,RO_2019_67,BLS1847,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+46,XO2020-1-68,RO_2019_68,BLS1850,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+47,XO2020-1-69,RO_2019_69,BLS1854,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+48,XO2020-1-70,RO_2019_70,BLS2082,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+49,XO2020-1-71,RO_2019_71,BLS2027,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+50,XO2020-1-72,RO_2019_72,BLS1890,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+51,XO2020-1-73,RO_2019_73,BLS1885,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+52,XO2020-1-74,RO_2019_74,BLS1511,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+53,XO2020-1-75,RO_2019_75,BLS1656,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+54,XO2020-1-76,RO_2019_76,BLS1500,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+55,XO2020-1-77,RO_2019_77,BLS1619,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+56,XO2020-1-78,RO_2019_78,BLS1468,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+57,XO2020-1-79,RO_2019_79,BLS1880,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+58,XO2020-1-80,RO_2019_80,BLS1750,Los Banos,Laguna,Philippines,14.169648,121.333653,2013,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_07
+59,XO2020-1-82,RO_2019_82,PXO86,Los Banos,Laguna,Philippines,14.169648,121.333653,1977,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,NA,NA
+60,XO2020-1-84,RO_2019_84,PXO112,NA,NULL,Philippines,14.574348,121.058501,1978,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,NA,NA
+61,XO2020-1-85,RO_2019_85,PXO79,NA,NULL,Philippines,14.574348,121.058501,1975,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,NA,NA
+62,XO2020-1-86,RO_2019_86,PXO99,Los Banos,Laguna,Philippines,14.169648,121.333653,1980,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,Lineage_02,Axoo_06
+63,XO2020-1-87,RO_2019_87,PXO145,NA,NULL,Philippines,14.574348,121.058501,1982,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,NA,NA
+64,XO2020-1-91,RO_2019_91,PXO280,Namulditan,Ifugao,Philippines,16.87,121.22,1990,NA,NA,NA,International Rice Research Institute,DNA,XO2020-1,NA,NA
+65,XO2020-1-95,RO_2019_95,Epi1-Weed,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,Weed,NA,EPI1,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+66,XO2020-1-96,RO_2019_96,Epi2-Weed,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,Weed,NA,EPI2,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+67,XO2020-1-97,RO_2019_97,Epi3-Weed,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,Weed,NA,EPI3,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+68,XO2020-1-98,RO_2019_98,Epi4-Weed,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,Weed,NA,EPI4,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_06
+69,XO2020-1-99,RO_2019_99,Epi5-Weed,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,Weed,NA,EPI5,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+70,XO2020-1-105,RO_2019_105,Epi11-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI11,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+71,XO2020-1-106,RO_2019_106,Epi12-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI12,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+72,XO2020-1-107,RO_2019_107,Epi13-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI13,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+73,XO2020-1-108,RO_2019_108,Epi14-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI14,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+74,XO2020-1-109,RO_2019_109,Epi15-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI15,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+75,XO2020-1-112,RO_2019_112,Epi18-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI18,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+76,XO2020-1-113,RO_2019_113,Epi19-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI19,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+77,XO2020-1-116,RO_2019_116,Epi22-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI22,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+78,XO2020-1-120,RO_2019_120,Epi26-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI26,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+79,XO2020-1-121,RO_2019_121,Epi27-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI27,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+80,XO2020-1-122,RO_2019_122,Epi28-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI28,International Rice Research Institute,Leaf,XO2020-1,Lineage_01,L1_Unresolved
+81,XO2020-1-125,RO_2019_125,Epi31-IR24,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,IR24,Hard dough,EPI31,International Rice Research Institute,Leaf,XO2020-1,NA,NA
+82,XO2020-1-136,RO_2019_136,Epi11-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI11,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+83,XO2020-1-137,RO_2019_137,Epi12-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI12,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+84,XO2020-1-138,RO_2019_138,Epi13-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI13,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_07
+85,XO2020-1-139,RO_2019_139,Epi14-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI14,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+86,XO2020-1-140,RO_2019_140,Epi15-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI15,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+87,XO2020-1-143,RO_2019_143,Epi18-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI18,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+88,XO2020-1-144,RO_2019_144,Epi19-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI19,International Rice Research Institute,Leaf,XO2020-1,Lineage_01,L1_Unresolved
+89,XO2020-1-147,RO_2019_147,Epi22-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI22,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_06
+90,XO2020-1-151,RO_2019_151,Epi26-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI26,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+91,XO2020-1-152,RO_2019_152,Epi27-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI27,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+92,XO2020-1-153,RO_2019_153,Epi28-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI28,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+93,XO2020-1-156,RO_2019_156,Epi31-IR24,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,IR24,Hard dough,EPI31,International Rice Research Institute,Leaf,XO2020-1,NA,NA
+94,XO2020-1-167,RO_2019_167,Epi11-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI11,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+95,XO2020-1-168,RO_2019_168,Epi12-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI12,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_07
+96,XO2020-1-169,RO_2019_169,Epi13-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI13,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+97,XO2020-1-170,RO_2019_170,Epi14-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI14,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_09
+98,XO2020-1-171,RO_2019_171,Epi15-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI15,International Rice Research Institute,Leaf,XO2020-1,Lineage_01,L1_Unresolved
+99,XO2020-1-174,RO_2019_174,Epi18-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI18,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_07
+100,XO2020-1-178,RO_2019_178,Epi22-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI22,International Rice Research Institute,Leaf,XO2020-1,Lineage_01,Axoo_02
+101,XO2020-1-182,RO_2019_182,Epi26-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI26,International Rice Research Institute,Leaf,XO2020-1,Lineage_01,L1_Unresolved
+102,XO2020-1-183,RO_2019_183,Epi27-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI27,International Rice Research Institute,Leaf,XO2020-1,Lineage_02,Axoo_05
+103,XO2020-1-184,RO_2019_184,Epi28-NSIC Rc216,Los Banos,Laguna,Philippines,14.169648,121.333653,2019,NSIC Rc216,Ripening,EPI28,International Rice Research Institute,Leaf,XO2020-1,Lineage_01,Axoo_01
+104,XO2020-1-IXG-1,IXG-1,IXG-1,NA,Kerala,India,10.352874,76.51204,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_01,L1_Unresolved
+105,XO2020-1-IXG-13,IXG-13,IXG-13,NA,Assam,India,26.244156,92.537842,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+106,XO2020-1-IXG-37,IXG-37,IXG-37,NA,Odisha,India,20.543124,84.689732,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+107,XO2020-1-IXG-49,IXG-49,IXG-49,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+108,XO2020-1-IXG-61,IXG-61,IXG-61,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+109,XO2020-1-IXG-85,IXG-85,IXG-85,NA,Chhattisgarh,India,21.295132,81.828232,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+110,XO2020-1-IXG-2,IXG-2,IXG-2,NA,Punjab,India,30.929321,75.500484,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+111,XO2020-1-IXG-14,IXG-14,IXG-14,NA,Gujarat,India,22.385005,71.745261,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+112,XO2020-1-IXG-26,IXG-26,IXG-26,NA,Chhattisgarh,India,21.295132,81.828232,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+113,XO2020-1-IXG-50,IXG-50,IXG-50,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+114,XO2020-1-IXG-62,IXG-62,IXG-62,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+115,XO2020-1-IXG-74,IXG-74,IXG-74,NA,Punjab,India,30.929321,75.500484,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+116,XO2020-1-IXG-86,IXG-86,IXG-86,NA,Chhattisgarh,India,21.295132,81.828232,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+117,XO2020-1-IXG-3,IXG-3,IXG-3,NA,Punjab,India,30.929321,75.500484,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+118,XO2020-1-IXG-15,IXG-15,IXG-15,NA,Assam,India,26.407384,93.25513,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+119,XO2020-1-IXG-27,IXG-27,IXG-27,NA,Assam,India,26.407384,93.25513,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+120,XO2020-1-IXG-39,IXG-39,IXG-39,NA,Maharashtra,India,18.906836,75.674158,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+121,XO2020-1-IXG-51,IXG-51,IXG-51,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+122,XO2020-1-IXG-63,IXG-63,IXG-63,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+123,XO2020-1-IXG-75,IXG-75,IXG-75,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+124,XO2020-1-IXG-87,IXG-87,IXG-87,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+125,XO2020-1-IXG-4,IXG-4,IXG-4,NA,Uttarakhand,India,30.041738,79.089691,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+126,XO2020-1-IXG-16,IXG-16,IXG-16,NA,Haryana,India,29,76,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+127,XO2020-1-IXG-28,IXG-28,IXG-28,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+128,XO2020-1-IXG-40,IXG-40,IXG-40,NA,Maharashtra,India,18.906836,75.674158,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+129,XO2020-1-IXG-52,IXG-52,IXG-52,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+130,XO2020-1-IXG-64,IXG-64,IXG-64,NA,Kerala,India,10.352874,76.51204,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+131,XO2020-1-IXG-76,IXG-76,IXG-76,NA,West Bengal,India,22.996495,87.685588,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+132,XO2020-1-IXG-88,IXG-88,IXG-88,NA,Tamil Nadu,India,10.909433,78.366535,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+133,XO2020-1-IXG-17,IXG-17,IXG-17,NA,Punjab,India,30.929321,75.500484,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+134,XO2020-1-IXG-29,IXG-29,IXG-29,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+135,XO2020-1-IXG-41,IXG-41,IXG-41,NA,Maharashtra,India,18.906836,75.674158,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_06
+136,XO2020-1-IXG-53,IXG-53,IXG-53,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+137,XO2020-1-IXG-65,IXG-65,IXG-65,NA,Tripura,India,23.775082,91.702509,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+138,XO2020-1-IXG-77,IXG-77,IXG-77,NA,Himachal Pradesh,India,31.81676,77.349321,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+139,XO2020-1-IXG-89,IXG-89,IXG-89,NA,Uttar Pradesh,India,27.130334,80.859666,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+140,XO2020-1-IXG-6,IXG-6,IXG-6,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+141,XO2020-1-IXG-18,IXG-18,IXG-18,NA,Uttarakhand,India,30.041738,79.089691,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+142,XO2020-1-IXG-30,IXG-30,IXG-30,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+143,XO2020-1-IXG-42,IXG-42,IXG-42,NA,Maharashtra,India,18.906836,75.674158,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_06
+144,XO2020-1-IXG-54,IXG-54,IXG-54,NA,Odisha,India,20.543124,84.689732,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+145,XO2020-1-IXG-66,IXG-66,IXG-66,NA,Punjab,India,30.929321,75.500484,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+146,XO2020-1-IXG-78,IXG-78,IXG-78,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+147,XO2020-1-IXG-90,IXG-90,IXG-90,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+148,XO2020-1-IXG-7,IXG-7,IXG-7,NA,Haryana,India,29,76,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+149,XO2020-1-IXG-19,IXG-19,IXG-19,NA,Assam,India,26.244156,92.537842,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+150,XO2020-1-IXG-31,IXG-31,IXG-31,NA,Karnataka,India,14.52039,75.722352,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+151,XO2020-1-IXG-43,IXG-43,IXG-43,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+152,XO2020-1-IXG-55,IXG-55,IXG-55,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+153,XO2020-1-IXG-67,IXG-67,IXG-67,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+154,XO2020-1-IXG-79,IXG-79,IXG-79,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+155,XO2020-1-IXG-91,IXG-91,IXG-91,NA,West Bengal,India,22.996495,87.685588,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+156,XO2020-1-IXG-8,IXG-8,IXG-8,NA,Haryana,India,29,76,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,NA,NA
+157,XO2020-1-IXG-32,IXG-32,IXG-32,NA,Maharashtra,India,18.906836,75.674158,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_06
+158,XO2020-1-IXG-56,IXG-56,IXG-56,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+159,XO2020-1-IXG-68,IXG-68,IXG-68,NA,Karnataka,India,14.52039,75.722352,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+160,XO2020-1-IXG-92,IXG-92,IXG-92,NA,Gujarat,India,22.385005,71.745261,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+161,XO2020-1-IXG-9,IXG-9,IXG-9,NA,Haryana,India,29,76,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,NA,NA
+162,XO2020-1-IXG-33,IXG-33,IXG-33,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+163,XO2020-1-IXG-45,IXG-45,IXG-45,NA,Tamil Nadu,India,10.909433,78.366535,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+164,XO2020-1-IXG-57,IXG-57,IXG-57,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+165,XO2020-1-IXG-69,IXG-69,IXG-69,NA,Odisha,India,20.543124,84.689732,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_05
+166,XO2020-1-IXG-93,IXG-93,IXG-93,NA,Odisha,India,20.543124,84.689732,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_01,L1_Unresolved
+167,XO2020-1-IXG-10,IXG-10,IXG-10,NA,Haryana,India,29,76,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,NA,NA
+168,XO2020-1-IXG-34,IXG-34,IXG-34,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+169,XO2020-1-IXG-46,IXG-46,IXG-46,NA,West Bengal,India,22.996495,87.685588,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+170,XO2020-1-IXG-58,IXG-58,IXG-58,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+171,XO2020-1-IXG-70,IXG-70,IXG-70,NA,Odisha,India,20.543124,84.689732,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+172,XO2020-1-IXG-82,IXG-82,IXG-82,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+173,XO2020-1-IXG-94,IXG-94,IXG-94,NA,Chhattisgarh,India,21.663736,81.840635,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+174,XO2020-1-IXG-11,IXG-11,IXG-11,NA,Uttarakhand,India,30.041738,79.089691,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+175,XO2020-1-IXG-23,IXG-23,IXG-23,NA,Punjab,India,30.929321,75.500484,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+176,XO2020-1-IXG-35,IXG-35,IXG-35,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+177,XO2020-1-IXG-47,IXG-47,IXG-47,NA,Bihar,India,25.644085,85.906508,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+178,XO2020-1-IXG-59,IXG-59,IXG-59,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+179,XO2020-1-IXG-71,IXG-71,IXG-71,NA,Odisha,India,20.543124,84.689732,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+180,XO2020-1-IXG-83,IXG-83,IXG-83,NA,Chhattisgarh,India,21.295132,81.828232,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+181,XO2020-1-IXG-12,IXG-12,IXG-12,NA,Uttarakhand,India,30.041738,79.089691,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_07
+182,XO2020-1-IXG-36,IXG-36,IXG-36,NA,Uttarakhand,India,30.041738,79.089691,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+183,XO2020-1-IXG-48,IXG-48,IXG-48,NA,Andhra Pradesh,India,15.924091,80.186381,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+184,XO2020-1-IXG-60,IXG-60,IXG-60,NA,Telangana,India,17.849592,79.115166,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+185,XO2020-1-IXG-72,IXG-72,IXG-72,NA,West Bengal,India,22.996495,87.685588,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+186,XO2020-1-IXG-84,IXG-84,IXG-84,NA,Chhattisgarh,India,21.295132,81.828232,NULL,NA,NA,NA,ICAR-Indian Institute of Rice Research (ICAR-IIRR),DNA,XO2020-1,Lineage_02,Axoo_09
+187,XO2020-1-189,RO_2019_189,BB 89,Dait Oo,Bago Region,Myanmar,18.245707,96.100493,2015,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+188,XO2020-1-190,RO_2019_190,BB 235,Kyauk Se,Mandalay Region,Myanmar,20.98724,95.765675,2016,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+189,XO2020-1-191,RO_2019_191,BB 208,Watt lat,Sagaing Region,Myanmar,24.476849,95.47474,2016,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+190,XO2020-1-192,RO_2019_192,BB 226,Patheingyi,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_06
+191,XO2020-1-193,RO_2019_193,BB 203,Watt lat,Sagaing Region,Myanmar,24.476849,95.47474,2016,PawSanYin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+192,XO2020-1-194,RO_2019_194,BB 204,Sagaing,Sagaing Region,Myanmar,24.476849,95.47474,2016,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+193,XO2020-1-195,RO_2019_195,BB 202,Shwe Bo,Sagaing Region,Myanmar,24.476849,95.47474,2016,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+194,XO2020-1-197,RO_2019_197,BB 11,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2015,Palethwe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+195,XO2020-1-198,RO_2019_198,BB 221,Patheingyi,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_06
+196,XO2020-1-199,RO_2019_199,BB 28,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2015,Hybrid,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+197,XO2020-1-200,RO_2019_200,BB 231,Madayar,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+198,XO2020-1-201,RO_2019_201,BB 222,Patheingyi,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_06
+199,XO2020-1-202,RO_2019_202,BB 226,Patheingyi,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+200,XO2020-1-203,RO_2019_203,BB 144,Ein Mal,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_01,L1_Unresolved
+201,XO2020-1-204,RO_2019_204,BB 237,Kyauk Se,Mandalay Region,Myanmar,20.98724,95.765675,2016,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+202,XO2020-1-205,RO_2019_205,BB 228,Madayar,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+203,XO2020-1-206,RO_2019_206,BB 190,Hmawbi,Yangon Region,Myanmar,16.647565,96.112922,2015,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+204,XO2020-1-207,RO_2019_207,BB 2,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2015,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+205,XO2020-1-211,RO_2019_211,BB 139,Myaung Mya,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Hankar,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+206,XO2020-1-213,RO_2019_213,BB 230,Madayar,Mandalay Region,Myanmar,20.98724,95.765675,2017,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+207,XO2020-1-214,RO_2019_214,BB 196,Hmawbi,Yangon Region,Myanmar,16.647565,96.112922,2017,Yatanartoe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+208,XO2020-1-215,RO_2019_215,BB 212,Kang Lay Daunt,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+209,XO2020-1-216,RO_2019_216,BB 5,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2017,Palethwe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+210,XO2020-1-217,RO_2019_217,BB 10,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2017,Palethwe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+211,XO2020-1-219,RO_2019_219,BB 78,Wow,Bago Region,Myanmar,18.245707,96.100493,2017,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_01,L1_Unresolved
+212,XO2020-1-222,RO_2019_222,BB 187,Dedaye,Yangon Region,Myanmar,16.647565,96.112922,2017,Pawsan BayGyar,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+213,XO2020-1-224,RO_2019_224,BB 165,Twon tay,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+214,XO2020-1-225,RO_2019_225,BB 7,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2017,Palethwe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+215,XO2020-1-226,RO_2019_226,BB 25,Pohbba Thiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2017,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+216,XO2020-1-227,RO_2019_227,BB 163,Kyaung gon,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+217,XO2020-1-228,RO_2019_228,BB 183,Pyapon,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+218,XO2020-1-229,RO_2019_229,BB 74,Wow,Bago Region,Myanmar,18.245707,96.100493,2017,Hybrid,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+219,XO2020-1-230,RO_2019_230,BB 147,Myaung Mya,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,Hankar,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+220,XO2020-1-231,RO_2019_231,BB 154,Myaung Mya,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+221,XO2020-1-232,RO_2019_232,BB 211,Shwe Bo,Sagaing Region,Myanmar,24.476849,95.47474,2017,PawSan,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+222,XO2020-1-233,RO_2019_233,BB 1,Zabuthiri,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2015,Ayeyar Badathar,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+223,XO2020-1-237,RO_2019_237,BB 200,Shwe Bo,Sagaing Region,Myanmar,24.476849,95.47474,2017,Paw San,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+224,XO2020-1-238,RO_2019_238,BB 205,Watt lat,Sagaing Region,Myanmar,24.476849,95.47474,2017,Paw San,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+225,XO2020-1-239,RO_2019_239,BB 206,Watt lat,Sagaing Region,Myanmar,24.476849,95.47474,2017,Paw San,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+226,XO2020-1-240,RO_2019_240,BB 210,Watt lat,Sagaing Region,Myanmar,24.476849,95.47474,2017,Paw San,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+227,XO2020-1-241,RO_2019_241,BB 214,Patheingyi,Mandalay Region,Myanmar,20.98724,95.765675,2017,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_06
+228,XO2020-1-245,RO_2019_245,BB 133,Myaung Mya,Ayeyarwady Region,Myanmar,16.834008,95.180471,2017,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+229,XO2020-1-246,RO_2019_246,BB 134,Kang Gyi Daunt,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Shwe Thwe Yin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+230,XO2020-1-247,RO_2019_247,BB 241,Yezin,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2017,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+231,XO2020-1-248,RO_2019_248,BB 105,Taung Ngu,Bago Region,Myanmar,18.245707,96.100493,2015,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+232,XO2020-1-249,RO_2019_249,BB 108,Thayaung Chaung,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Paw San Yin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_06
+233,XO2020-1-250,RO_2019_250,BB 111,Pann Ta Naw,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Inn Ma,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+234,XO2020-1-252,RO_2019_252,BB 118,Pann Ta Naw,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+235,XO2020-1-253,RO_2019_253,BB 121,Pann Ta Naw,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Hybrid,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+236,XO2020-1-254,RO_2019_254,BB 122,Kan Gyi Daunt,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Thukha Hmwe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+237,XO2020-1-256,RO_2019_256,BB 89,Dike OO,Bago Region,Myanmar,18.245707,96.100493,2015,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+238,XO2020-1-257,RO_2019_257,BB 216,Madayar,Mandalay Region,Myanmar,20.98724,95.765675,2016,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+239,XO2020-1-260,RO_2019_260,Yezin,Yezin,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2019,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+240,XO2020-1-261,RO_2019_261,BB 201,Watt lat,Sagaing Region,Myanmar,24.476849,95.47474,2016,Paw San,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+241,XO2020-1-262,RO_2019_262,BB 53,Pyinmana,Naypyidaw Union Territory,Myanmar,20.280709,96.265883,2015,Manawthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+242,XO2020-1-264,RO_2019_264,BB 31,Kyaut tan,Yangon Region,Myanmar,16.647565,96.112922,2015,Shwe Manaw,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+243,XO2020-1-267,RO_2019_267,BB 44,Kyauk Se,Mandalay Region,Myanmar,20.98724,95.765675,2016,Ayeyarmin,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+244,XO2020-1-269,RO_2019_269,BB 52,Lewi Kaw,Kayah State,Myanmar,19.281251,97.329181,2016,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,NA,NA
+245,XO2020-1-272,RO_2019_272,BB 152,Myaung Mya,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Manawphyu,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
+246,XO2020-1-273,RO_2019_273,BB 145,Maupin,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Thukha Hmwe,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_07
+247,XO2020-1-274,RO_2019_274,BB 124,Pathein,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Paw San Bay Gyar,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Xoc,Xoc
+248,XO2020-1-275,RO_2019_275,BB 119,Nyaung don,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Yatanar -1,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_06
+249,XO2020-1-276,RO_2019_276,BB 164,Kyaung gon,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_01,Axoo_01
+250,XO2020-1-277,RO_2019_277,BB 160,Nyaung don,Ayeyarwady Region,Myanmar,16.834008,95.180471,2015,Sinthukha,NA,NA,Department of Agricultural Research,Leaf,XO2020-1,Lineage_02,Axoo_09
