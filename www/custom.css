@@ -1,0 +1,123 @@
+/* custom.css */
+.navbar {
+  background-color: #45a049 !important;
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {
+  background-color: #45a049 !important;
+  color: white !important;
+}
+.navbar-default .navbar-nav > li > a {
+  color: white !important;
+}
+.navbar-default .navbar-nav > li > a:hover {
+  background-color: #45a049 !important;
+  color: white !important;
+}
+.navbar-default .navbar-brand {
+  color: white !important;
+}
+
+.banner{
+  background-color: #4CAF50;
+}
+
+.banner-header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 65px;
+}
+
+.banner-text{
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+  
+}
+
+.section-header{
+  background-color: #4CAF50;
+  color: white; 
+  padding: 10px 0;
+  font-family: 'Merriweather', sans-serif;
+  font-size: 65px;
+}
+
+body {
+  position: relative;
+  font-family: 'Poppins', sans-serif;
+}
+
+.div-content {
+  position: relative;
+}
+
+
+/* Media query for tablets and below */
+@media (max-width: 768px) {
+  .header {
+    font-size: 45px; /* Smaller font size for tablets */
+  }
+}
+
+/* Media query for mobile devices */
+@media (max-width: 480px) {
+  .header {
+    font-size: 30px; /* Even smaller font size for mobile devices */
+  }
+}
+
+.slick-carousel {
+  padding: 10px; /* Optional: Add padding inside the border */
+  border-radius: 10px; /* Optional: Add rounded corners */
+}
+
+.slick-carousel .slick-carousel-news {
+  padding: 10px; /* Optional: Add padding inside the border */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  font-size: 100px;
+  font-family: 'Roboto Slab';
+}
+
+.footer {
+  background-color: #4CAF50;
+  position: absolute;
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 100%;
+  border-radius: 5px;
+  padding: 14px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+            
+.title {
+  font-family: 'Merriweather';
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.value {
+  font-size: 28px;
+  font-family: 'Lora';
+}
+
+.main-panel {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+  margin-top: 15px;
+}
