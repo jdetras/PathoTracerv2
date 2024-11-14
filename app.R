@@ -10,7 +10,8 @@ library(leaflet.extras)
 library(htmlwidgets)
 library(sf)
 library(readr)
-
+library(tidyr)
+library(forcats)
 
 ###### Data Loading ######
 # replace with data fetch from database
@@ -28,6 +29,7 @@ recommended_variety<- read.csv('data/BLB-varieties-recom.csv')
 # maps
 #world_geojson <- st_read("data/maps/countries.geo.json")
 world_geojson <- st_read("data/maps/countries.geojson")
+#philippines <- read_sf("data/maps/PH/gadm41_PHL_3/gadm41_PHL_3.shp")
 
 # get all countries 
 countries_of_interest <- unique(rice_data$country)
@@ -57,13 +59,12 @@ rgene_colors <- c(
 
 
 # For clean-up
-# use colorBrewer
-colset <- c("#ffff99","#111E6C", "#0F52BA", "#0000FF", "#FA8072", "#EA3C53", "#CD5C5C", "#B22222", 
-            "#FF2400", "#960018",  "#C7EA46",  "#4F7942", "#0B6623", "palegreen", "yellow2", "wheat3")
-strainlst <- c("Xoc","AXoo 1","AXoo 2","AXoo 3","AXoo 4","AXoo 5","AXoo 6","AXoo 7","AXoo 8","AXoo 9",
-               "AXoo 10","AXoo 11","AXoo 12", "L1 Unresolved","L2 Unresolved","L3 Unresolved")
+# Define color mapping
+colset <- c("#ffff99", "#111E6C", "#0F52BA", "#0000FF", "#FA8072", "#EA3C53", "#CD5C5C", "#B22222", 
+            "#FF2400", "#960018", "#C7EA46", "#4F7942", "#0B6623", "palegreen", "yellow2", "wheat3")
+strainlst <- c("Xoc", "Axoo_01", "Axoo_02", "Axoo_03", "Axoo_04", "Axoo_05", "Axoo_06", "Axoo_07", "Axoo_08", 
+               "Axoo_09", "Axoo_10", "Axoo_11", "Axoo_12", "L1_Unresolved", "L2_Unresolved", "L3_Unresolved")
 strain_colors <- setNames(colset, strainlst)
-
 
 # define the colors
 # used Ian's color scheme
@@ -87,6 +88,22 @@ axoo_colors <- c(
   "NA" = "gray"
 )
 
+# Define the mapping of IRBB columns to gene names
+gene_mapping <- c("IRBB4" = "Xa4", "IRBB5" = "Xa5", "IRBB7" = "Xa7", 
+                  "IRBB10" = "Xa10", "IRBB13" = "Xa13", "IRBB14" = "Xa14", 
+                  "IRBB21" = "Xa21")
+
+# Reshape blb_varieties to have 'variable' and 'status' columns for each IRBB entry
+blb_melted <- recommended_variety %>%
+  pivot_longer(cols = starts_with("IRBB"), names_to = "variable", values_to = "status") %>%
+  filter(status == "[+]") %>%
+  select(Line, variable, Cultivar.group, Cultivation.status)
+
+# Apply the gene mapping to the 'variable' column
+blb_melted <- blb_melted %>%
+  mutate(Rgene = gene_mapping[variable])
+
+
 ##### Data Aggregations #####
 # Join two tables rice_data and gene_recommendations per pathotype population
 joined_data <- merge(rice_data, recommended_genes_data, by = "country")
@@ -103,7 +120,8 @@ country_effectiveness <- com_xa3_data %>%
   group_by(country, Xa_gene) %>%
   summarise(effectiveness = sum(perc, na.rm = TRUE),
             num_isolates = n()) %>%
-  ungroup()
+  arrange(desc(effectiveness))
+
 
 # Aggregate data by year, country and pathogen popn
 # calculate percentage
@@ -217,7 +235,7 @@ ui <- navbarPage(
                           )
                         ) #end of metrics card
                       ),
-                      card( class="report", style="height: 80vh; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; background-color: #fff; margin: 20px 0;",
+                      card( class="report", style="height: 90vh; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 20px; background-color: #fff; margin: 20px 0;",
                         tabsetPanel(
                           tabPanel("Global Reports",
                                    tabsetPanel(
@@ -232,11 +250,11 @@ ui <- navbarPage(
                                               card(
                                                 div(class = "plot-container", plotOutput("effectivity_rgenes", height = "40vh")
                                                 )
-                                              ),
+                                              )
                   
-                                              card(
+                                              #card(
                                                 #div(class = "plot-container", plotOutput("effectivity_rgene_all_country", height = "40vh"))
-                                              ),
+                                              #),
                                       )
                                      ),
           
@@ -247,7 +265,7 @@ ui <- navbarPage(
                                      sidebarPanel(class = "sidebar-panel",width=2,
                                                   #selectInput("pathogens", "Select Pathogen", choices = c("Bacteria"), selected = "Bacteria"),
                                                   #selectInput("disease", "Select Disease", choices = c("Bacterial Blight"), selected = "Bacterial Blight"),
-                                                  sliderInput("year", "Select Year Range", sep="",
+                                                  sliderInput("year", "Year Range", sep="",
                                                               min = min(rice_data$year, na.rm = TRUE), 
                                                               max = max(rice_data$year, na.rm = TRUE), 
                                                               value = c(min(rice_data$year, na.rm = TRUE), max(rice_data$year, na.rm = TRUE))),
@@ -265,7 +283,7 @@ ui <- navbarPage(
                                                           plotOutput("axooPlot", height = "40vh"),
                                                           plotOutput("axoo_population_plot", height = "40vh")
                                                  ),
-                                                 tabPanel("Effective R-genes",
+                                                 tabPanel("Effective Rgenes",
                                                           card(
                                                             plotOutput("effectivity_rgene_per_country", height = "40vh")
                                                           ),
@@ -281,10 +299,9 @@ ui <- navbarPage(
                                                  tabPanel("Sample Submission Summary", 
                                                           plotOutput("area_chart", height = "80vh")
                                                  ),
-                                                 tabPanel("Recommended varieties", 
-                                                          #div(class = "data-table-container", DTOutput("population_tables", height = "80vh"))
-                                                          "site under construction"
-                                                 )
+                                                 tabPanel("Varieties with Rgenes", 
+                                                          #DTOutput("gene_table")
+                                                          div(class = "data-table-container", DTOutput("gene_table", height = "80vh"))                                                 )
                                                )      
                                      ) # end of mainpanel
                                    ) #end of sidebarLayout 
@@ -294,7 +311,10 @@ ui <- navbarPage(
                       ),
              ), # end of tabPanel: Bacterial Blight
              
-             tabPanel("Rice Blast", "Genotyping markers for blast is now available. To genotype your samples, please submit your samples using this ",tags$a(href="https://app.smartsheet.com/b/publish?EQBCT=7fd054ee4696420a91bd4a05e14f6fe0", "link")),
+             tabPanel("Rice Blast", 
+                    tags$h4("Genotyping markers for blast are now available."),
+                    tags$p("To genotype your samples, please submit your samples using this ",tags$a(href="https://app.smartsheet.com/b/publish?EQBCT=7fd054ee4696420a91bd4a05e14f6fe0", "link"))
+             ),
              tabPanel("Others", "Site is under construction")
   ),
   
@@ -420,7 +440,6 @@ server <- function(input, output) {
   ## for testing only. not for production
   ## subject to code refactor
   output$test_map <- renderLeaflet({
-    #outline<- filtered_data[chull(latitude, longitude)]
     
     leaflet(filtered_data) %>%
       addTiles(group = "OSM (default)") %>%
@@ -497,7 +516,7 @@ server <- function(input, output) {
   ## plot effectivity_rgenes_Axoo_popn
   output$effectivity_rgenes <-renderPlot({
     #data <- filtered_rgenes_selected()
-    data <-genes_frequency_data
+    data <- genes_frequency_data
     
     ggplot(data, aes(x = Population, y = Frequency, fill = Xa_gene)) +
       geom_bar(stat = "identity", position = "dodge") +
@@ -517,25 +536,31 @@ server <- function(input, output) {
       )
   })
   
+  # bargraph containing the effective genes per country
   output$effectivity_rgene_per_country <- renderPlot({
     data_effectivity_per_country <-  country_effectiveness %>%
       filter(country == input$country)
     
+    # Reorder Xa_gene factor by effectiveness in descending order
+    data_effectivity_per_country <- data_effectivity_per_country %>%
+      mutate(Xa_gene = fct_reorder(Xa_gene, effectiveness, .desc = TRUE))
     
-    ggplot(data_effectivity_per_country, aes(x = country, y  = effectiveness, fill = Xa_gene)) +
+    #ggplot( data_effectivity_per_country, 
+    ggplot( data_effectivity_per_country,
+           aes(x = Xa_gene, y  = effectiveness, fill = Xa_gene)) +
       geom_bar(stat = "identity", position = "dodge") +
       labs(title = "Effectiveness of xa-genes per country",
-           x = "Country",
+           x = "Xa genes",
            y = "Frequency of Avirulent Isolate",
            caption = "") +
       #geom_text(aes(label = num_isolates), position = position_dodge(width = 0.9), vjust = -0.5) +
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 14),  # Increase font size
-            axis.text.y = element_text(size = 14),  # Increase font size
-            axis.title.x = element_text(size = 14),  # Increase font size
-            axis.title.y = element_text(size = 14),  # Increase font size
+      theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Increase font size
+            axis.text.y = element_text(size = 11),  # Increase font size
+            axis.title.x = element_text(size = 12),  # Increase font size
+            axis.title.y = element_text(size = 12),  # Increase font size
             plot.title = element_text(size = 18), # Increase font size 
-            legend.title = element_text(size = 18),
+            legend.title = element_text(size = 16),
             legend.text = element_text(size=16)
       ) +  # Increase font size 
       scale_fill_manual(name = "R genes", 
@@ -545,8 +570,8 @@ server <- function(input, output) {
       )
   })
   
+  # effectivity Rgenes
   output$effectivity_rgene_all_country <- renderPlot({
-    
     
     ggplot(country_effectiveness, aes(x = country, y = effectiveness, fill = Xa_gene)) +
       geom_bar(stat = "identity", position = "dodge") +
@@ -573,6 +598,9 @@ server <- function(input, output) {
   
   ## recommended_genes_all
   output$recom_genes <- renderPlot({
+    #country_data <- country_data %>%
+      
+    
     ggplot(country_data, aes(x = country, y = Value, fill = Rgene)) +
       geom_bar(stat = "identity") +
       #theme(axis.text.x = element_text(angle = 45, hjust = 1),
@@ -585,7 +613,7 @@ server <- function(input, output) {
             legend.text = element_text(size=16)
             ) +  # Increase font size
       labs(title = "Recommended Genes per Country", 
-           x = "Country", 
+           x = "Rgenes", 
            y = "Percentage") +
       scale_fill_manual(name = "R genes", 
                         values = c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346","#efdf48", "#f9a52c", "#d64e12"),
@@ -593,7 +621,6 @@ server <- function(input, output) {
                                   "IRBB13"="Xa13", "IRBB14"="Xa14", "IRBB21"="Xa21")
       )
   })
-  
   
   
   # map all isolates
@@ -604,7 +631,7 @@ server <- function(input, output) {
     if (nrow(joined_data) > 0) {
       leaflet(joined_data) %>%
         #addTiles() %>%
-        addProviderTiles("CartoDB.Positron") %>%
+        addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=2, maxZoom=18)) %>%
         setView(lng = mean(rice_data$longitude, na.rm = TRUE), lat = mean(rice_data$latitude, na.rm = TRUE), zoom = 3) %>%
         
         ## add countries
@@ -619,7 +646,6 @@ server <- function(input, output) {
           #fillColor = ~factor(ADMIN),
           popup = ~ADMIN
         )%>%
-        
         ## add isolates
         addCircleMarkers(
           lng = ~longitude, lat = ~latitude,
@@ -664,7 +690,6 @@ server <- function(input, output) {
            y = "Value") +
       scale_fill_manual(values = rgene_colors)
   })
-  
   
   
   # Plot for Axoo_population
@@ -756,10 +781,9 @@ server <- function(input, output) {
       filter(ADMIN %in% c(input$country))
     map_data <- filtered_data()
     
-    
     if (nrow(map_data) > 0) {
       leaflet(map_data) %>%
-        addProviderTiles("CartoDB.Positron") %>%
+        addProviderTiles("CartoDB.Positron",options = providerTileOptions(minZoom=2, maxZoom=18)) %>%
         setView(lng = mean(map_data$longitude, na.rm = TRUE), lat = mean(map_data$latitude, na.rm = TRUE), zoom = 6) %>%
         addPolygons(
           data = subset_countries,
@@ -782,7 +806,6 @@ server <- function(input, output) {
         addLegend(position = "topright", pal = colorFactor(palette = strain_colors, domain = rice_data$AxooPopn), 
                   values = ~AxooPopn, title = "Pathogen population",
                   opacity = 1)
-      
     } else {
       leaflet() %>%
         addProviderTiles("CartoDB.Positron") %>%
@@ -850,6 +873,18 @@ server <- function(input, output) {
       ##  data_table
       #)
     })
+  })
+  
+  output$gene_table <- renderDT({
+    
+    # Merge with recommended_genes on 'Rgene' column
+    merged_data <- recommended_genes_data %>%
+      inner_join(blb_melted, by = "Rgene") %>%
+      select(Rgene, Line, Cultivar.group, Cultivation.status)
+    
+    # Render as a datatable
+    datatable(merged_data, options = list(pageLength = 10))
+  
   })
   
 }
