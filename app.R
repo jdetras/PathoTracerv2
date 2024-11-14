@@ -13,6 +13,16 @@ library(readr)
 library(tidyr)
 library(forcats)
 
+#con <- dbConnect(RPostgres::Postgres(),
+#                 dbname = "pathotracer",
+#                 host="localhost",
+#                 port = "5434",
+#                 user = "pathotraceruser",
+#                 password = "pathoXgene"
+#)
+
+
+
 ###### Data Loading ######
 # replace with data fetch from database
 rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data.csv")
@@ -568,6 +578,7 @@ server <- function(input, output) {
                         label = c("IRBB4"="Xa4", "IRBB5"="Xa5", "IRBB7"="Xa7", "IRBB10"="Xa10",
                                   "IRBB13"="Xa13", "IRBB14"="Xa14", "IRBB21"="Xa21")
       )
+      
   })
   
   # effectivity Rgenes
@@ -629,10 +640,10 @@ server <- function(input, output) {
       filter(ADMIN %in% countries_of_interest)
     
     if (nrow(joined_data) > 0) {
-      leaflet(joined_data) %>%
+      leaflet(joined_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
         #addTiles() %>%
-        addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=2, maxZoom=18)) %>%
-        setView(lng = mean(rice_data$longitude, na.rm = TRUE), lat = mean(rice_data$latitude, na.rm = TRUE), zoom = 3) %>%
+        addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3, maxZoom=15)) %>%
+        setView(lng = mean(rice_data$longitude, na.rm = TRUE), lat = mean(rice_data$latitude, na.rm = TRUE), zoom = 4) %>%
         
         ## add countries
         addPolygons(
@@ -782,9 +793,9 @@ server <- function(input, output) {
     map_data <- filtered_data()
     
     if (nrow(map_data) > 0) {
-      leaflet(map_data) %>%
-        addProviderTiles("CartoDB.Positron",options = providerTileOptions(minZoom=2, maxZoom=18)) %>%
-        setView(lng = mean(map_data$longitude, na.rm = TRUE), lat = mean(map_data$latitude, na.rm = TRUE), zoom = 6) %>%
+      leaflet(map_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
+        addProviderTiles("CartoDB.Positron",options = providerTileOptions(minZoom=3, maxZoom=18)) %>%
+        setView(lng = mean(map_data$longitude, na.rm = TRUE), lat = mean(map_data$latitude, na.rm = TRUE), zoom = 4) %>%
         addPolygons(
           data = subset_countries,
           color = "#444444", 
