@@ -16,18 +16,6 @@ library(forcats)
 library(DT)
 library(highcharter)
 
-# Load dataset
-rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data.csv")
-rice_data$year <- as.numeric(rice_data$year)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- trimws(rice_data$AxooPopn)   # Remove any leading/trailing whitespace
-recommended_genes_data <- read_csv("data/recommended_genes.csv") # based on prior data from Dale
-#citations <- readRDS("data/latest-data-loading-28May-2024/package_citations.rds")
-genes_frequency_data <- read.csv('data/latest-data-loading-28May-2024/293_IRBBfreq.csv')
-com_xa3_data <- read.csv('data/latest-data-loading-28May-2024/com_xa3.csv')
-recommended_variety<- read.csv('data/BLB-varieties-recom.csv')
-
 # Filter rows where AxooPopn are NA
 missing_Axoo <- rice_data %>%
   filter(is.na(AxooPopn) | is.null(AxooPopn))
@@ -55,11 +43,11 @@ cumulative_isolates <- rice_data %>%
 # Load world boundaries
 world <- ne_countries(scale = "medium",returnclass = "sf")
 #world <- ne_states()
-#world <- st_read("data/maps/countries.geo.json") # 
+#world <- st_read("data/maps/countries.geo.json") #
 
 # For debugging purposes
 #print(unique(rice_data$country))
-#print(unique(world$sovereignt))
+#print(unique(world$sovereign))
 
 # Merge isolate data with world boundaries
 #world_data <- left_join(world, cumulative_isolates, by = c("sovereignt" = "country"))
@@ -71,8 +59,8 @@ genes_frequency_data$Xa_gene <- irbb_to_xa[genes_frequency_data$IRBB_Line]
 com_xa3_data$Xa_gene <- irbb_to_xa[com_xa3_data$variable]
 
 # Define the mapping of IRBB columns to gene names
-gene_mapping <- c("IRBB4" = "Xa4", "IRBB5" = "xa5", "IRBB7" = "Xa7", 
-                  "IRBB10" = "Xa10", "IRBB13" = "xa13", "IRBB14" = "Xa14", 
+gene_mapping <- c("IRBB4" = "Xa4", "IRBB5" = "xa5", "IRBB7" = "Xa7",
+                  "IRBB10" = "Xa10", "IRBB13" = "xa13", "IRBB14" = "Xa14",
                   "IRBB21" = "Xa21")
 
 # Reshape blb_varieties to have 'variable' and 'status' columns for each IRBB entry
@@ -95,7 +83,7 @@ country_data <- joined_data %>%
   summarise(Value = mean(Value)) %>%
   ungroup()
 
-# Aggregate data to calculate average effectiveness per country and Xa_gene, 
+# Aggregate data to calculate average effectiveness per country and Xa_gene,
 # and count the number of isolates
 country_effectiveness <- com_xa3_data %>%
   group_by(country, Xa_gene) %>%
@@ -114,19 +102,19 @@ abundance_popn_data <- rice_data %>%
 # Define the color palette for R-gene recommendation
 # using Ian's color scheme
 rgene_colors <- c(
-  "Xa4"  = "#9b5fe0", 
-  "xa5"  = "#16a4d8", 
-  "Xa7"  = "#60dbe8", 
+  "Xa4"  = "#9b5fe0",
+  "xa5"  = "#16a4d8",
+  "Xa7"  = "#60dbe8",
   "Xa10" = "#8bd346",
-  "xa13" = "#efdf48", 
-  "Xa14" = "#f9a52c", 
+  "xa13" = "#efdf48",
+  "Xa14" = "#f9a52c",
   "Xa21" = "#d64e12"
 )
 
 # Define color mapping
-colset <- c("#ffff99", "#111E6C", "#0F52BA", "#0000FF", "#FA8072", "#EA3C53", "#CD5C5C", "#B22222", 
+colset <- c("#ffff99", "#111E6C", "#0F52BA", "#0000FF", "#FA8072", "#EA3C53", "#CD5C5C", "#B22222",
             "#FF2400", "#960018", "#C7EA46", "#4F7942", "#0B6623", "palegreen", "yellow2", "wheat3", "gray")
-strainlst <- c("Xoc", "Axoo_01", "Axoo_02", "Axoo_03", "Axoo_04", "Axoo_05", "Axoo_06", "Axoo_07", "Axoo_08", 
+strainlst <- c("Xoc", "Axoo_01", "Axoo_02", "Axoo_03", "Axoo_04", "Axoo_05", "Axoo_06", "Axoo_07", "Axoo_08",
                "Axoo_09", "Axoo_10", "Axoo_11", "Axoo_12", "L1_Unresolved", "L2_Unresolved", "L3_Unresolved", "NA")
 strain_colors <- setNames(colset, strainlst)
 
@@ -196,7 +184,7 @@ ui <- navbarPage(
     tags$img(src = "pathotracer_logo.png", height = "50px")
     #"PathoTracer"
   ),
-  
+
   theme = bslib::bs_theme(
     bg = "#F9F9F9",     # Light gray background
     fg = "#000000",     # Black text
@@ -210,7 +198,7 @@ ui <- navbarPage(
     tags$script(src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Leaflet.fullscreen.min.js"),
     tags$link(rel = "stylesheet", type = "text/css", href = "style.css") # Include the CSS
   ),
-  
+
   navbarMenu("Home",
              tabPanel("About the Tool",
                       fluidRow(style = "background-color: #4CAF50;",
@@ -243,20 +231,20 @@ ui <- navbarPage(
              ),
              tabPanel(tags$a(href = "https://app.smartsheet.com/b/publish?EQBCT=7fd054ee4696420a91bd4a05e14f6fe0", "Sample Submission System (SMS)"))
   ),
-  
+
   # Disease Maps
   navbarMenu(
     title = "Disease Maps",
-    tabPanel("Bacterial Blight", 
+    tabPanel("Bacterial Blight",
       fluidPage(
         #titlePanel("Bacterial Blight"),
         fluidRow(
           tags$div(
-            class = "card card-custom", 
+            class = "card card-custom",
             div(
               tags$p(
                 class = "card-text",
-                tags$b(class = "card-title", "Bacterial Blight"), 
+                tags$b(class = "card-title", "Bacterial Blight"),
                 "is caused primarily by Xanthomonas oryzae pv. oryzae (Xoo). Asian strains of Xoo were found to have 3 major lineages which are further divided into 12 subpopulations based on 22,115 genome-wide SNP data. Navigate the Map tab below to see the distribution of each Asian Xoo."
               )
             )
@@ -282,7 +270,7 @@ ui <- navbarPage(
                     class = "info-box",
                     h4("Distribution"),
                   ),
-                  
+
                   plotOutput("isolate_barchart", height = "250px"), # Placeholder for bar chart
                   actionButton("view_chart", "View Chart", class = "btn-view-chart") # Button for pop-out
                 ),
@@ -299,16 +287,16 @@ ui <- navbarPage(
               plotOutput("stacked_barchart", height = "400px", width = "100%") # Display the dynamic stacked chart
             )
           ),
-          
+
           tabPanel("Per Country",
-             # Filter 
+             # Filter
              sidebarLayout(
               sidebarPanel(
                 sliderInput("year", "Year Range", sep="",
-                  min = min(rice_data$year, na.rm = TRUE), 
-                  max = max(rice_data$year, na.rm = TRUE), 
+                  min = min(rice_data$year, na.rm = TRUE),
+                  max = max(rice_data$year, na.rm = TRUE),
                   value = c(min(rice_data$year, na.rm = TRUE), max(rice_data$year, na.rm = TRUE))),
-                selectInput("country", "Select Country", 
+                selectInput("country", "Select Country",
                   choices = c(sort(unique(rice_data$country)))
                 )
               ),
@@ -316,7 +304,7 @@ ui <- navbarPage(
                # Country Zoom
                tabsetPanel(
                  type = "pills",
-                 tabPanel("Map", 
+                 tabPanel("Map",
                     leafletOutput("country_map", height = "80vh")
                  ),
                  tabPanel("Axoo Summary",
@@ -335,7 +323,7 @@ ui <- navbarPage(
                         multiple = TRUE,
                         selected = unique(country_effectiveness$Xa_gene)
                       ),
-                      
+
                       highchartOutput(outputId = "effectivity_rgene_per_country_hc")
                     ),
                     div(
@@ -345,7 +333,7 @@ ui <- navbarPage(
                       )
                     )
                  ),
-                 tabPanel("Varieties with Rgenes", 
+                 tabPanel("Varieties with Rgenes",
                     div(
                       selectInput(
                         inputId = "selected_genes_var",
@@ -373,13 +361,13 @@ ui <- navbarPage(
                       DTOutput("table", height = "80vh")
                     )
                  )
-                 #tabPanel("Test", 
+                 #tabPanel("Test",
                  #    highchartOutput(outputId = "isolate_barchart_hc",  height = 500)
                  #)
-                 
-               ) # end of tabsetpanel     
+
+               ) # end of tabsetpanel
              ) # end of mainpanel
-            ) #end of sidebarLayout 
+            ) #end of sidebarLayout
           ) # end of tabPanel for Country zooming
         )  # end of contents of tabsetPabel (Overview and Country Filter)
       )#end of fluidPage for Bacterial Blight
@@ -399,7 +387,7 @@ ui <- navbarPage(
               tags$h2("Our Impact", style = "background-color: #4CAF50; color: white; padding: 10px 0; text-align: center; font-weight: bold; margin-bottom: 10px;"),
               div(class="slick-carousel-news", slickROutput("news_carousel", width = "90%"))
        )
-     )      
+     )
   ),
 
   tabPanel("Contact Us",
@@ -415,7 +403,7 @@ ui <- navbarPage(
               tags$p("Los Baños, Laguna 4031, Philippines"),
               tags$p("Phone: +63 (2) 8580 5600 ext. 2743"),
               tags$p("Email: v.scheplerluu@irri.org")
-              
+
        ),
        column(6,
               class = "contact-card",
@@ -425,14 +413,14 @@ ui <- navbarPage(
               tags$p("International Rice Research Institute (IRRI)"),
               tags$p("Los Baños, Laguna 4031, Philippines"),
               tags$p("Email: d.pinili@irri.org")
-              
+
        )
      )
   ) # end of Contact Us
 )
 
 server <- function(input, output, session) {
-  
+
   ## testimonies for slickR
   output$testimonials_carousel <- renderSlickR({
     testimonials <- list(
@@ -449,7 +437,7 @@ server <- function(input, output, session) {
     )
     slickR(testimonials)
   })
-  
+
   ## news
   output$news_carousel <- renderSlickR({
     news <- list(
@@ -466,42 +454,42 @@ server <- function(input, output, session) {
     )
     slickR(news)
   })
-  
+
   # Calculate default statistics
   # Get Total Distinct Countries
   total_countries <- rice_data %>%
     summarize(n_countries = n_distinct(country)) %>%
     pull(n_countries)
-  
+
   # GEt Total Distinct Institute
   total_institutes <- rice_data %>%
     summarize(n_institutes = n_distinct(institute)) %>%
     pull(n_institutes)
-  
+
   # Calculate default data for all AxooPopn
   default_axoo_data <- rice_data %>%
     group_by(AxooPopn) %>%
     summarize(Count = n(), .groups = "drop")
-  
+
   # Reactive value to track the selected country
   selected_country <- reactiveVal(NULL)
-  
+
   # Update sidebar information
   observeEvent(input$map_shape_click, {
     clicked <- input$map_shape_click
-    
+
     if (!is.null(clicked$id)) {
       selected_country(clicked$id)
     } else {
       selected_country(NULL)
     }
   })
-  
+
   # Handle reset button
   observeEvent(input$reset_map, {
     selected_country(NULL) # Clear the selected country
   })
-  
+
   # Render sidebar information
   output$country_info <- renderText({
     if (is.null(selected_country())) {
@@ -511,7 +499,7 @@ server <- function(input, output, session) {
       selected_country()
     }
   })
-  
+
   # Render Total Isolate Count in the sidebarPanel
   output$total_isolates <- renderText({
     if (is.null(selected_country())) {
@@ -522,12 +510,12 @@ server <- function(input, output, session) {
         #filter(sovereignt == selected_country()) %>%
         filter(name == selected_country()) %>%
         as.data.frame()
-      
+
       # return to UI
       paste("Total Isolates: ", ifelse(is.na(country_data$IsolateCount[1]), 0, country_data$IsolateCount[1]))
     }
   })
-  
+
   # Render the pop-out modal dialog
   observeEvent(input$view_chart, {
     showModal(
@@ -541,7 +529,7 @@ server <- function(input, output, session) {
       )
     )
   })
-  
+
   # Render the bar chart for the AxooPopn
   output$isolate_barchart <- renderPlot({
     if (is.null(selected_country())) {
@@ -549,7 +537,7 @@ server <- function(input, output, session) {
       ggplot(default_axoo_data, aes(x = reorder(AxooPopn, -Count), y = Count, fill = AxooPopn)) +
         geom_bar(stat = "identity") +
         scale_fill_manual(
-          values = axoo_colors, 
+          values = axoo_colors,
           na.translate = TRUE
         ) +
         theme_minimal() +
@@ -562,18 +550,18 @@ server <- function(input, output, session) {
     } else {
       # Country selected: show isolates per AxooPopn in the selected country
       country_name <- selected_country()
-      
+
       filtered_data <- rice_data %>%
         filter(country == country_name) %>%
         mutate(country = ifelse(country == "United Republic of Tanzania", "Tanzania", country))  %>%
         group_by(AxooPopn) %>%
         summarize(Count = n(), .groups = "drop")
-      
+
       if (nrow(filtered_data) > 0) {
         ggplot(filtered_data, aes(x = reorder(AxooPopn, -Count), y = Count, fill = AxooPopn)) +
           geom_bar(stat = "identity") +
           scale_fill_manual(
-            values = axoo_colors, 
+            values = axoo_colors,
             na.translate = TRUE
           ) +
           theme_minimal() +
@@ -591,7 +579,7 @@ server <- function(input, output, session) {
         }
       }
     })
-  
+
   # -------- Render the bar chart for the AxooPopn using highcharter--------------------
   output$axoo_barchart_hc <- renderHighchart({
     if (is.null(selected_country())) {
@@ -613,12 +601,12 @@ server <- function(input, output, session) {
     } else {
       # Country selected: show isolates per AxooPopn in the selected country
       country_name <- selected_country()
-      
+
       filtered_data <- rice_data %>%
         filter(country == country_name) %>%
         group_by(AxooPopn) %>%
         summarize(Count = n(), .groups = "drop")
-      
+
       if (nrow(filtered_data) > 0) {
         hchart(
           filtered_data,
@@ -643,11 +631,11 @@ server <- function(input, output, session) {
       }
     }
   })
-  
-  
+
+
   # Render the map
   output$map <- renderLeaflet({
-    
+
     # Add jitter to the rice_data coordinates to prevent clumping
     jitter_amount <- 0.25  # Adjust this value as needed
     rice_data <- rice_data %>%
@@ -655,9 +643,9 @@ server <- function(input, output, session) {
         jittered_lat = latitude + runif(n(), -jitter_amount, jitter_amount),
         jittered_lng = longitude + runif(n(), -jitter_amount, jitter_amount)
     )
-    
+
     # add worldCopyJump to avoid the basemap being duplicated
-    leaflet(world_data, options = leafletOptions(worldCopyJump = TRUE)) %>% 
+    leaflet(world_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
       addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3, maxZoom=15)) %>%
       addFullscreenControl()  %>%    # Add fullscreen control button
       setView(lng = mean(rice_data$longitude, na.rm = TRUE), lat = mean(rice_data$latitude, na.rm = TRUE), zoom = 4) %>%
@@ -686,19 +674,19 @@ server <- function(input, output, session) {
         fillColor = ~axoo_pal(AxooPopn),
         fillOpacity = 1, # no opacity
         #clusterOptions = markerClusterOptions(  # show the clusters on each country
-        #  showCoverageOnHover = TRUE, 
-        #  zoomToBoundsOnClick=TRUE, 
-        #  removeOutsideVisibleBounds = TRUE, 
+        #  showCoverageOnHover = TRUE,
+        #  zoomToBoundsOnClick=TRUE,
+        #  removeOutsideVisibleBounds = TRUE,
         #  iconCreateFunction = JS(
-        #    "function(cluster) { 
-        #      var markers = cluster.getAllChildMarkers(); 
+        #    "function(cluster) {
+        #      var markers = cluster.getAllChildMarkers();
         #      var firstMarker = markers[0];
         #      var color = firstMarker.options.color;
-        #      return L.divIcon({ 
-        #        className: 'leaflet-cluster', 
-        #        html: '<div style=\"background-color:' + color + '; width: 30px; height: 30px; line-height: 30px; color: white; border-radius: 50%; text-align: center;\">' + markers.length + '</div>', 
-        #        iconSize: [30, 30] 
-        #      }); 
+        #      return L.divIcon({
+        #        className: 'leaflet-cluster',
+        #        html: '<div style=\"background-color:' + color + '; width: 30px; height: 30px; line-height: 30px; color: white; border-radius: 50%; text-align: center;\">' + markers.length + '</div>',
+        #        iconSize: [30, 30]
+        #      });
         #    }"
         #  )
         #  ),
@@ -719,41 +707,41 @@ server <- function(input, output, session) {
         title = "Pathogen Population",
         opacity = "1"                   # make sure this has the same opacity with the circleMarkers
       )
-    
+
   })
-  
+
   # When a country is clicked
   observeEvent(input$map_shape_click, {
     # If error encountered, click$id is NULL, make sure there's a layer ID in the map.AddPolygons()
     clicked <- input$map_shape_click
-    
+
     # For Debugging Purposes: Show the clicked object
-    print(clicked$id)  
-    
+    print(clicked$id)
+
     if (!is.null(clicked$id)) {
       selected_country <- world_data %>%
         #filter(sovereignt == clicked$id) %>%  # Ensure `sovereignt` matches `clicked$id`
         filter(name == clicked$id) %>%  # Ensure `name` matches `clicked$id`
         as.data.frame()
-      
+
       if (nrow(selected_country) > 0) {
         #country_name <- selected_country$sovereignt[1]
         country_name <- selected_country$name[1]
-        
+
         output$country_info <- renderText({ paste("Country Name:", country_name )})
         output$total_isolates <- renderText({
           paste("Total Isolates: ", ifelse(is.na(selected_country$IsolateCount[1]), 0, selected_country$IsolateCount[1]))
         })
-        
+
         # Filter rice data for the selected country
         filtered_data <- rice_data %>%
           filter(country == country_name) %>%  # Ensure the 'country' column in your CSV is correct
           group_by(AxooPopn) %>%               # Group only by AxooPopn
           summarize(Count = n(), .groups = "drop")  # Summarize by AxooPopn counts
-        
+
         # For Debugging Purposes: Show the filtered data
-        print(filtered_data)  
-        
+        print(filtered_data)
+
         # Render the bar chart
         if (nrow(filtered_data) > 0) {
           output$isolate_barchart <- renderPlot({
@@ -777,7 +765,7 @@ server <- function(input, output, session) {
       }
     }
   })
-  
+
   # For downloading the bar chart
   # Download handler for the chart
   # To debug: make this a global fxn. Download any chart which has this button, pass the chart/plot id
@@ -807,7 +795,7 @@ server <- function(input, output, session) {
               filter(country == country_name) %>%
               group_by(AxooPopn) %>%
               summarize(Count = n(), .groups = "drop")
-            
+
             if (nrow(filtered_data) > 0) {
               ggplot(filtered_data, aes(x = reorder(AxooPopn, -Count), y = Count, fill = AxooPopn)) +
                 geom_bar(stat = "identity") +
@@ -836,12 +824,12 @@ server <- function(input, output, session) {
         height = 7
       )
     })
-  
+
     # Render the stacked bar chart dynamically
     output$stacked_barchart <- renderPlot({
       # Reactive check for selected country
       country_name <- selected_country()
-      
+
       if (is.null(country_name)) {
         # No country selected: Show global distribution
         ggplot(rice_data, aes(x = country, fill = AxooPopn)) +
@@ -858,7 +846,7 @@ server <- function(input, output, session) {
       } else {
         # Country selected: Filter data for the selected country
         filtered_data <- rice_data %>% filter(country == country_name)
-        
+
         ggplot(filtered_data, aes(x = AxooPopn, fill = AxooPopn)) +
           geom_bar(position = "stack") +
           scale_fill_manual(values = axoo_colors, na.translate = TRUE) +
@@ -872,17 +860,17 @@ server <- function(input, output, session) {
           #theme(axis.text.x = element_text(angle = 45, hjust = 1))
       }
     })
-    
+
     ## --------------------- Converting stacked chart to HC chart-------------------------##
     output$stacked_barchart_hc <- renderHighchart({
       country_name <- selected_country()
-      
+
       if (is.null(country_name)) {
         # No country selected: Show global distribution
         global_data <- rice_data %>%
           group_by(country, AxooPopn) %>%
           summarize(SampleCount = n(), .groups = "drop")
-        
+
         hchart(
           global_data,
           type = "bar",
@@ -904,7 +892,7 @@ server <- function(input, output, session) {
           filter(country == country_name) %>%
           group_by(AxooPopn) %>%
           summarize(SampleCount = n(), .groups = "drop")
-        
+
         hchart(
           filtered_data,
           type = "bar",
@@ -918,8 +906,8 @@ server <- function(input, output, session) {
           hc_legend(title = list(text = "Pathogen Populations"))
       }
     })
-    
-    
+
+
     # For "PerCountry" Filtering
     # Different from the filtered_data used in the "Overview" panel
     filtered_data1 <- reactive({
@@ -930,21 +918,21 @@ server <- function(input, output, session) {
       } else {
         data<- joined_data %>%
           filter(!is.na(latitude) & !is.na(longitude)) %>%
-          filter(country == input$country ) %>% 
+          filter(country == input$country ) %>%
           filter( is.na(year) | (year >= input$year[1] & year <= input$year[2]))
       }
       data
     })
-    
-    # render the map 
+
+    # render the map
     # markers are isolates
     output$country_map <- renderLeaflet({
       subset_countries <- world %>%
         #filter(sovereignt %in% c(input$country))
         filter(name %in% c(input$country))
-      
+
       jitter_amount <- 0.20
-      map_data<-rice_data %>% 
+      map_data<-rice_data %>%
         filter (rice_data$country %in% subset_countries)  %>%
         #filter(!is.na(latitude) & !is.na(longitude)) %>%
         #filter(rice_data$year >= input$year[1] & rice_data$year <= input$year[2])  %>%
@@ -953,15 +941,15 @@ server <- function(input, output, session) {
           jittered_lng = longitude + runif(n(), -jitter_amount, jitter_amount)  # Add jitter to longitude
         )
       print(map_data)
-      
+
       if (nrow(map_data) > 0) {
         leaflet(map_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
           addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3, maxZoom=10)) %>%
           setView(lng = mean(map_data$longitude, na.rm = TRUE), lat = mean(map_data$latitude, na.rm = TRUE), zoom = 7) %>%
           addPolygons(
             data = subset_countries,
-            color = "#444444", 
-            weight = 1, 
+            color = "#444444",
+            weight = 1,
             opacity = 1,
             fillOpacity = 0.7,
             fillColor = "#e88474",
@@ -969,21 +957,21 @@ server <- function(input, output, session) {
           )%>%
           addCircleMarkers(
             data = map_data,
-            lng = ~jittered_lng, 
+            lng = ~jittered_lng,
             lat = ~jittered_lat,
             popup = ~paste("Isolate Name:", isolatename,
                            "<br/>Axoo Population:", AxooPopn,
-                           "<br/>Lineage:", lineage, 
-                           "<br/>District/Town:", district, 
-                           "<br/>Province:", province, 
-                           "<br/>Country:", country, 
+                           "<br/>Lineage:", lineage,
+                           "<br/>District/Town:", district,
+                           "<br/>Province:", province,
+                           "<br/>Country:", country,
                            "<br/>Year collected:", year ),
             color = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
             fillColor = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
             fillOpacity = 1,
             radius = 5
           )  %>%
-          addLegend(position = "topright", pal = colorFactor(palette = strain_colors, domain = rice_data$AxooPopn), 
+          addLegend(position = "topright", pal = colorFactor(palette = strain_colors, domain = rice_data$AxooPopn),
                     values = ~AxooPopn, title = "Pathogen population",
                     opacity = 1)
       } else {
@@ -993,7 +981,7 @@ server <- function(input, output, session) {
           addPopups(lng = 0, lat = 0, "No data available for selected filters")
       }
     })
-    
+
     # AxooPlot (Percentage)
     output$axooPlot <- renderPlot({
       data_processed <- filtered_data1() %>%
@@ -1001,8 +989,8 @@ server <- function(input, output, session) {
         group_by(country, AxooPopn) %>%
         summarise(count = n(), .groups = 'drop') %>%
         mutate(percentage = count / sum(count) * 100)
-      
-      
+
+
       ggplot(data_processed, aes(y = country, x = percentage, fill = AxooPopn)) +
         geom_bar(stat = "identity") +
         #theme_minimal() +
@@ -1014,14 +1002,14 @@ server <- function(input, output, session) {
               legend.title = element_text(size = 18),
               legend.text = element_text(size=16)
         ) +  # Increase font size
-        labs(title = "Axoo population distribution", y = "Country", x = "Percent Distribution(%)") + 
+        labs(title = "Axoo population distribution", y = "Country", x = "Percent Distribution(%)") +
         scale_fill_manual(values = axoo_colors)
     })
-    
+
     # Plot for Axoo_population
     output$axoo_population_plot <- renderPlot({
       axoo_data <- filtered_data1()
-      
+
       ggplot(axoo_data, aes(x = AxooPopn, fill = AxooPopn)) +
         geom_bar() +
         #theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
@@ -1036,18 +1024,18 @@ server <- function(input, output, session) {
         labs(title = "Total samples by pathogen population", x = "Axoo population", y = "Count") +
         scale_fill_manual(values = axoo_colors)
     })
-    
+
     # bargraph containing the effective genes per country
     output$effectivity_rgene_per_country <- renderPlot({
       data_effectivity_per_country <-  country_effectiveness %>%
         filter(country == input$country)
         #filter(country == "Burkina Faso")
-      
+
       # Reorder Xa_gene factor by effectiveness in descending order
       data_effectivity_per_country <- data_effectivity_per_country %>%
         mutate(Xa_gene = fct_reorder(Xa_gene, effectiveness, .desc = TRUE))
-      
-      #ggplot( data_effectivity_per_country, 
+
+      #ggplot( data_effectivity_per_country,
       ggplot( data_effectivity_per_country,
               aes(x = Xa_gene, y  = effectiveness, fill = Xa_gene)) +
         geom_bar(stat = "identity", position = "dodge") +
@@ -1061,16 +1049,16 @@ server <- function(input, output, session) {
               axis.text.y = element_text(size = 11),  # Increase font size
               axis.title.x = element_text(size = 12),  # Increase font size
               axis.title.y = element_text(size = 12),  # Increase font size
-              plot.title = element_text(size = 18), # Increase font size 
+              plot.title = element_text(size = 18), # Increase font size
               legend.title = element_text(size = 16),
               legend.text = element_text(size=16)
-        ) +  # Increase font size 
-        scale_fill_manual(name = "R genes", 
+        ) +  # Increase font size
+        scale_fill_manual(name = "R genes",
                           values = c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346","#efdf48", "#f9a52c", "#d64e12"),
                           label = c("Xa4","xa5","Xa7", "Xa10","xa13","Xa14", "Xa21")
         )
     })
-    
+
     # Ensure selected genes are limited to 3 globally
     #selected_genes <- reactive({
     #  if (length(input$selected_genes) > 3) {
@@ -1079,27 +1067,27 @@ server <- function(input, output, session) {
     #    input$selected_genes
     #  }
     #})
-    
-    
+
+
     output$effectivity_rgene_per_country_hc <- renderHighchart({
       selected_genes <- input$selected_genes
       #if (length(selected_genes) > 3) {
       #  selected_genes <- selected_genes[1:3]
       #}
-      
+
       # Filter the data for the selected country
       data_effectivity_per_country <- country_effectiveness %>%
         filter(country == input$country, Xa_gene %in% selected_genes)
-      
+
       # Reorder Xa_gene factor by effectiveness in descending order
       data_effectivity_per_country <- data_effectivity_per_country %>%
         mutate(Xa_gene = fct_reorder(Xa_gene, effectiveness, .desc = TRUE))
-      
+
       # Prepare data for Highcharts
       hc_data <- data_effectivity_per_country %>%
         select(Xa_gene, effectiveness) %>%
         arrange(desc(effectiveness))
-      
+
       # Highcharts bar plot
       highchart() %>%
         hc_chart(type = "column") %>%
@@ -1115,20 +1103,20 @@ server <- function(input, output, session) {
         hc_legend(enabled = FALSE) %>%
         hc_colors(c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346", "#efdf48", "#f9a52c", "#d64e12"))
     })
-    
-    
-    
+
+
+
     # Data table of all genotyped samples/isolates
     output$table <- renderDT({
       data <- filtered_data1() %>%
         distinct(databasecode, .keep_all = TRUE) %>%
         select(isolatename, year, district, province, country, institute, lineage, AxooPopn ) #%>% # Adjust according to actual column names
-        #distinct(isolatename)     
+        #distinct(isolatename)
          #data %>% rename(isolatename = "Isolate Name", samplecode = "Sample Code")
-      
+
       datatable(data, options = list(autoWidth = FALSE, pageLength = 10))
     })
-    
+
     # Area Chart for submitted samples
     output$area_chart <- renderPlot({
       area_data <- rice_data %>%
@@ -1136,11 +1124,11 @@ server <- function(input, output, session) {
         group_by(year, country, AxooPopn) %>%
         summarise(num_isolates = n()) %>%
         mutate(percent_abundance = num_isolates / sum(num_isolates) * 100)
-      
+
       ggplot(area_data, aes(x = year, y = percent_abundance, fill = AxooPopn)) +
         geom_area(position = "stack") +
         scale_fill_manual(name = "Population ID",
-                          values = c("#ffff99","#111E6C", "#0F52BA", "#0000FF", "#FA8072", "#EA3C53", "#CD5C5C", "#B22222", 
+                          values = c("#ffff99","#111E6C", "#0F52BA", "#0000FF", "#FA8072", "#EA3C53", "#CD5C5C", "#B22222",
                                      "#FF2400", "#960018",  "#C7EA46",  "#4F7942", "#0B6623", "palegreen", "yellow2", "wheat3"),
                           label = c("Xoc","AXoo 1","AXoo 2","AXoo 3","AXoo 4","AXoo 5","AXoo 6","AXoo 7","AXoo 8","AXoo 9",
                                     "AXoo 10","AXoo 11","AXoo 12", "L1 Unresolved","L2 Unresolved","L3 Unresolved")
@@ -1155,9 +1143,9 @@ server <- function(input, output, session) {
               plot.title = element_text(size = 18),
               legend.title = element_text(size = 18),
               legend.text = element_text(size=16)
-        )  # Increase font size 
+        )  # Increase font size
     })
-    
+
     # Varieties with the Rgene
     output$variety_gene_table <- renderDT({
       selected_genes_var <- input$selected_genes_var
@@ -1166,12 +1154,12 @@ server <- function(input, output, session) {
         inner_join(blb_melted, by = "Rgene") %>%
         select(Rgene, Line, Cultivar.group, Cultivation.status)  %>%
         filter (Rgene %in% selected_genes_var)
-      
+
       # Render as a datatable
       datatable(merged_data, options = list(pageLength = 10))
     })
-    
-    
+
+
     ## ---------------- Test HighCHarts Library -------------------- ##
     isolate_data <- reactive({
       rice_data %>%
@@ -1179,7 +1167,7 @@ server <- function(input, output, session) {
         group_by(AxooPopn, year) %>%
         summarise(num_isolates = n(), .groups = "drop") # Add .groups to avoid warning
     })
-    
+
     output$isolate_barchart_hc <- renderHighchart({
       data <- isolate_data()
       hchart(
