@@ -17,18 +17,6 @@ library(DT)
 library(highcharter)
 library(stringr)
 
-# Load dataset
-rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data.csv")
-rice_data$year <- as.numeric(rice_data$year)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- trimws(rice_data$AxooPopn)   # Remove any leading/trailing whitespace
-recommended_genes_data <- read_csv("data/recommended_genes.csv") # based on prior data from Dale
-#citations <- readRDS("data/latest-data-loading-28May-2024/package_citations.rds")
-genes_frequency_data <- read.csv('data/latest-data-loading-28May-2024/293_IRBBfreq.csv')
-com_xa3_data <- read.csv('data/latest-data-loading-28May-2024/com_xa3.csv')
-recommended_variety<- read.csv('data/BLB-varieties-recom.csv')
-
 # Filter rows where AxooPopn are NA
 missing_Axoo <- rice_data %>%
   filter(is.na(AxooPopn) | is.null(AxooPopn))
