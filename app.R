@@ -15,6 +15,19 @@ library(tidyr)
 library(forcats)
 library(DT)
 library(highcharter)
+library(stringr)
+
+# Load dataset
+rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data.csv")
+rice_data$year <- as.numeric(rice_data$year)
+rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
+rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
+rice_data$AxooPopn <- trimws(rice_data$AxooPopn)   # Remove any leading/trailing whitespace
+recommended_genes_data <- read_csv("data/recommended_genes.csv") # based on prior data from Dale
+#citations <- readRDS("data/latest-data-loading-28May-2024/package_citations.rds")
+genes_frequency_data <- read.csv('data/latest-data-loading-28May-2024/293_IRBBfreq.csv')
+com_xa3_data <- read.csv('data/latest-data-loading-28May-2024/com_xa3.csv')
+recommended_variety<- read.csv('data/BLB-varieties-recom.csv')
 
 # Filter rows where AxooPopn are NA
 missing_Axoo <- rice_data %>%
@@ -25,8 +38,8 @@ missing_coordinates <- rice_data %>%
   filter(is.na(latitude) | is.na(longitude))
 
 # For Debugging: View the filtered data and output the missing coordinates
-#print(missing_coordinates)
-#print(missing_Axoo)
+# print(missing_coordinates)
+# print(missing_Axoo)
 write.csv(missing_coordinates, "missing_coordinates.csv", row.names = FALSE)
 write.csv(missing_Axoo, "missing_AxooPopn.csv", row.names = FALSE)
 
@@ -41,9 +54,11 @@ cumulative_isolates <- rice_data %>%
   summarize(IsolateCount = n())
 
 # Load world boundaries
-world <- ne_countries(scale = "medium",returnclass = "sf")
+world <- ne_countries(scale = "medium", returnclass = "sf")  %>%
+  mutate(name = ifelse(name == "United Republic of Tanzania", "Tanzania", name))
+
 #world <- ne_states()
-#world <- st_read("data/maps/countries.geo.json") #
+#world <- st_read("data/maps/countries.geo.json")
 
 # For debugging purposes
 #print(unique(rice_data$country))
@@ -270,8 +285,9 @@ ui <- navbarPage(
                     class = "info-box",
                     h4("Distribution"),
                   ),
-
                   plotOutput("isolate_barchart", height = "250px"), # Placeholder for bar chart
+                  # Display the Highcharter Bar Chart Directly
+                  #highchartOutput("isolate_barchart_hc", height = "250px"),
                   actionButton("view_chart", "View Chart", class = "btn-view-chart") # Button for pop-out
                 ),
                 mainPanel(
@@ -523,7 +539,7 @@ server <- function(input, output, session) {
         title = "Isolate Distribution Chart",
         plotOutput("isolate_barchart", height = "400px", width = "100%"), # Larger plot in modal
         #class= "",
-        downloadButton("download_chart", "Download"), # Add download button
+        #downloadButton("download_chart", "Download"), # Add download button
         easyClose = TRUE, # Allow closing the modal by clicking outside
         footer = modalButton("Close") # Add a close button
       )
@@ -546,14 +562,16 @@ server <- function(input, output, session) {
           x = "Pathogen Populations",
           y = "Sample Count"
         ) +
-        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+        theme(
+          axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "none" # Remove legend
+        )
     } else {
       # Country selected: show isolates per AxooPopn in the selected country
       country_name <- selected_country()
 
       filtered_data <- rice_data %>%
         filter(country == country_name) %>%
-        mutate(country = ifelse(country == "United Republic of Tanzania", "Tanzania", country))  %>%
         group_by(AxooPopn) %>%
         summarize(Count = n(), .groups = "drop")
 
@@ -569,8 +587,11 @@ server <- function(input, output, session) {
             title = paste("Pathogen Distribution in", country_name),
             x = "Pathogen Population",
             y = "Sample Count"
-          ) +
-          theme(axis.text.x = element_text(angle = 45, hjust = 1))
+          ) #+
+          #theme(
+          #  axis.text.x = element_text(angle = 45, hjust = 1),
+          #  legend.position = "none" # Remove legend
+          #)
       } else {
         # No data for the selected country
         ggplot() +
@@ -579,6 +600,8 @@ server <- function(input, output, session) {
         }
       }
     })
+
+
 
   # -------- Render the bar chart for the AxooPopn using highcharter--------------------
   output$axoo_barchart_hc <- renderHighchart({
@@ -917,9 +940,9 @@ server <- function(input, output, session) {
           filter(!is.na(latitude) & !is.na(longitude))
       } else {
         data<- joined_data %>%
-          filter(!is.na(latitude) & !is.na(longitude)) %>%
           filter(country == input$country ) %>%
-          filter( is.na(year) | (year >= input$year[1] & year <= input$year[2]))
+          filter(!is.na(latitude) & !is.na(longitude)) #%>%
+          #filter( year >= input$year[1] & year <= input$year[2])
       }
       data
     })
@@ -1068,7 +1091,7 @@ server <- function(input, output, session) {
     #  }
     #})
 
-
+    #------- test HC library---------------------------------#
     output$effectivity_rgene_per_country_hc <- renderHighchart({
       selected_genes <- input$selected_genes
       #if (length(selected_genes) > 3) {
@@ -1108,13 +1131,14 @@ server <- function(input, output, session) {
 
     # Data table of all genotyped samples/isolates
     output$table <- renderDT({
-      data <- filtered_data1() %>%
+      table_data <- rice_data %>%
+        filter(country == input$country ) %>%
         distinct(databasecode, .keep_all = TRUE) %>%
         select(isolatename, year, district, province, country, institute, lineage, AxooPopn ) #%>% # Adjust according to actual column names
         #distinct(isolatename)
          #data %>% rename(isolatename = "Isolate Name", samplecode = "Sample Code")
 
-      datatable(data, options = list(autoWidth = FALSE, pageLength = 10))
+      datatable(table_data, options = list(autoWidth = FALSE, pageLength = 10))
     })
 
     # Area Chart for submitted samples
@@ -1161,26 +1185,64 @@ server <- function(input, output, session) {
 
 
     ## ---------------- Test HighCHarts Library -------------------- ##
-    isolate_data <- reactive({
-      rice_data %>%
-        filter(country == input$country) %>%
-        group_by(AxooPopn, year) %>%
-        summarise(num_isolates = n(), .groups = "drop") # Add .groups to avoid warning
+    output$isolate_barchart_hc <- renderHighchart({
+      country_name <- selected_country()
+
+      if (is.null(country_name)) {
+        # Global Distribution
+        highchart() %>%
+          hc_chart(type = "column") %>%
+          hc_title(text = "Global Distribution of Pathogen Population") %>%
+          hc_xAxis(categories = default_axoo_data$AxooPopn, title = list(text = "Pathogen Populations")) %>%
+          hc_yAxis(title = list(text = "Sample Count")) %>%
+          hc_add_series(
+            name = "Count",
+            data = default_axoo_data$Count,
+            colorByPoint = TRUE
+          ) %>%
+          hc_tooltip(pointFormat = "Samples: {point.y}") %>%
+          hc_plotOptions(column = list(dataLabels = list(enabled = TRUE)))
+
+      } else {
+        # Filter data for the selected country
+        filtered_data <- rice_data %>%
+          filter(country == country_name) %>%
+          group_by(AxooPopn) %>%
+          summarize(Count = n(), .groups = "drop")
+
+        if (nrow(filtered_data) > 0) {
+          highchart() %>%
+            hc_chart(type = "column") %>%
+            hc_title(text = paste("Pathogen Distribution in", country_name)) %>%
+            hc_xAxis(categories = filtered_data$AxooPopn, title = list(text = "Pathogen Population")) %>%
+            hc_yAxis(title = list(text = "Sample Count")) %>%
+            hc_add_series(
+              name = "Count",
+              data = filtered_data$Count,
+              colorByPoint = TRUE
+            ) %>%
+            hc_tooltip(pointFormat = "Samples: {point.y}") %>%
+            hc_plotOptions(column = list(dataLabels = list(enabled = TRUE)))
+
+        } else {
+          # No data for selected country
+          highchart() %>%
+            hc_chart(type = "column") %>%
+            hc_title(text = paste("Pathogen Distribution in", country_name)) %>%
+            hc_subtitle(text = "No data available for this country.") %>%
+            hc_xAxis(categories = NULL) %>%
+            hc_yAxis(title = list(text = "Sample Count"), max = 1) %>%
+            hc_add_series(name = "No Data", data = list(0))
+        }
+      }
     })
 
-    output$isolate_barchart_hc <- renderHighchart({
-      data <- isolate_data()
-      hchart(
-        data,
-        "column",
-        hcaes(x = year, y = num_isolates, group = AxooPopn), # Group by AxooPopn for multiple series
-        color = "#0198f9",
-        name = "Isolates"
-      ) %>%
-        hc_title(text = "Number of Isolates by Year and AxooPopn", align = "left") %>%
-        hc_xAxis(title = list(text = "Year")) %>%
-        hc_yAxis(title = list(text = "Number of Isolates"))
+    # Render the enlarged modal chart (same data but larger)
+    output$isolate_barchart_modal <- renderHighchart({
+      output$isolate_barchart_hc()
     })
+
+
 }
 
 shinyApp(ui, server)
