@@ -17,6 +17,8 @@ library(DT)
 library(highcharter)
 library(stringr)
 
+#citations <- readRDS("data/latest-data-loading-28May-2024/package_citations.rds")
+
 # Filter rows where AxooPopn are NA
 missing_Axoo <- rice_data %>%
   filter(is.na(AxooPopn) | is.null(AxooPopn))
@@ -348,6 +350,8 @@ ui <- navbarPage(
                       ),
                       DTOutput("variety_gene_table"),
                       #highchartOutput("data_table_highchart"),
+                      tags$br(),
+                      #downloadButton("download_varieties", "Download CSV"),  # Add download button
                       tags$br()
                     ),
                     div(
@@ -445,6 +449,16 @@ server <- function(input, output, session) {
   ## news
   output$news_carousel <- renderSlickR({
     news <- list(
+      div(
+        style = "padding: 10px 60px; border: 1px solid #ddd; margin-bottom: 20px;",
+        tags$p(tags$i("\"The first international workshop on rice false smut puts research spotlight on an escalating plant disease\""),style="font-size:30px;"),
+        tags$p(tags$a(href="https://news.irri.org/2024/10/the-first-international-workshop-on.html", "Read More"), style="font-color: #880808;")
+      ),
+      div(
+        style = "padding: 10px 60px; border: 1px solid #ddd; margin-bottom: 20px;",
+        tags$p(tags$i("\"Unity Against Uncertainty: Experts Come Together to Combat Rice False Smut\""),style="font-size:30px;"),
+        tags$p(tags$a(href="https://www.irri.org/news-and-events/news/unity-against-uncertainty-experts-come-together-combat-rice-false-smut", "Read More"), style="font-color: #880808;")
+      ),
       div(
         style = "padding: 10px 60px; border: 1px solid #ddd; margin-bottom: 20px;",
         tags$p(tags$i("\"A disease-surveillance network in Africa will accelerate detection and actions to prevent the spread of major rice diseases\""), style="font-size:30px;"),
@@ -572,14 +586,14 @@ server <- function(input, output, session) {
           ) +
           theme_minimal() +
           labs(
-            title = paste("Pathogen Distribution in", country_name),
+            title = paste("Distribution in", country_name),
             x = "Pathogen Population",
             y = "Sample Count"
-          ) #+
-          #theme(
-          #  axis.text.x = element_text(angle = 45, hjust = 1),
-          #  legend.position = "none" # Remove legend
-          #)
+          ) +
+        theme(
+          axis.text.x = element_text(angle = 45, hjust = 1),
+          legend.position = "none" # Remove legend
+        )
       } else {
         # No data for the selected country
         ggplot() +
@@ -648,7 +662,7 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
 
     # Add jitter to the rice_data coordinates to prevent clumping
-    jitter_amount <- 0.25  # Adjust this value as needed
+    jitter_amount <- 0.00025  # Adjust this value as needed
     rice_data <- rice_data %>%
       mutate(
         jittered_lat = latitude + runif(n(), -jitter_amount, jitter_amount),
@@ -657,7 +671,7 @@ server <- function(input, output, session) {
 
     # add worldCopyJump to avoid the basemap being duplicated
     leaflet(world_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
-      addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3, maxZoom=15)) %>%
+      addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3)) %>%
       addFullscreenControl()  %>%    # Add fullscreen control button
       setView(lng = mean(rice_data$longitude, na.rm = TRUE), lat = mean(rice_data$latitude, na.rm = TRUE), zoom = 4) %>%
       addPolygons(
@@ -760,9 +774,13 @@ server <- function(input, output, session) {
               geom_bar(stat = "identity") +
               scale_fill_manual(values = axoo_colors, na.translate = TRUE) +
               labs(
-                title = paste("Pathogen Population Distribution in", country_name),
+                title = paste("Pathogen Population in ", country_name),
                 x = "AxooPopn",
                 y = "Sample Count"
+              ) +
+              theme(
+                axis.text.x = element_text(angle = 45, hjust = 1),
+                legend.position = "none" # Remove legend
               )
           })
         } else {
@@ -942,7 +960,7 @@ server <- function(input, output, session) {
         #filter(sovereignt %in% c(input$country))
         filter(name %in% c(input$country))
 
-      jitter_amount <- 0.20
+      jitter_amount <- 0.00002
       map_data<-rice_data %>%
         filter (rice_data$country %in% subset_countries)  %>%
         #filter(!is.na(latitude) & !is.na(longitude)) %>%
@@ -955,8 +973,9 @@ server <- function(input, output, session) {
 
       if (nrow(map_data) > 0) {
         leaflet(map_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
-          addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3, maxZoom=10)) %>%
+          addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom=3)) %>%
           setView(lng = mean(map_data$longitude, na.rm = TRUE), lat = mean(map_data$latitude, na.rm = TRUE), zoom = 7) %>%
+          # add fitbounds
           addPolygons(
             data = subset_countries,
             color = "#444444",
@@ -980,7 +999,13 @@ server <- function(input, output, session) {
             color = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
             fillColor = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
             fillOpacity = 1,
-            radius = 5
+            radius = 5,
+            clusterOptions = markerClusterOptions(
+              showCoverageOnHover = TRUE,
+              zoomToBoundsOnClick = TRUE,
+              spiderfyOnMaxZoom = TRUE,
+              animate = TRUE
+            )
           )  %>%
           addLegend(position = "topright", pal = colorFactor(palette = strain_colors, domain = rice_data$AxooPopn),
                     values = ~AxooPopn, title = "Pathogen population",
@@ -1170,7 +1195,6 @@ server <- function(input, output, session) {
       # Render as a datatable
       datatable(merged_data, options = list(pageLength = 10))
     })
-
 
     ## ---------------- Test HighCHarts Library -------------------- ##
     output$isolate_barchart_hc <- renderHighchart({
