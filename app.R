@@ -7,7 +7,7 @@ library(ggplot2)
 #library(geodata)
 library(rnaturalearth)
 library(rnaturalearthdata)
-library(rnaturalearthhires)
+#library(rnaturalearthhires)
 library(shinyjs)
 library(slickR)
 library(readr)
@@ -16,6 +16,23 @@ library(forcats)
 library(DT)
 library(highcharter)
 library(stringr)
+
+# Load dataset
+rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data_20May2025.csv")
+rice_data$year <- as.numeric(rice_data$year)
+rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
+rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
+rice_data$AxooPopn <- trimws(rice_data$AxooPopn)   # Remove any leading/trailing whitespace
+
+# Load the recommended genes
+recommended_genes_data <- read_csv("data/recommended_genes.csv") # based on prior data from Dale
+
+# Get gene effectiveness frequency
+genes_frequency_data <- read.csv('data/latest-data-loading-28May-2024/293_IRBBfreq.csv')
+com_xa3_data <- read.csv('data/latest-data-loading-28May-2024/com_xa3.csv')
+
+# Load the recommended varieties
+recommended_variety<- read.csv('data/BLB-varieties-recom.csv')
 
 #citations <- readRDS("data/latest-data-loading-28May-2024/package_citations.rds")
 
@@ -410,7 +427,7 @@ ui <- navbarPage(
               tags$p("International Rice Research Institute (IRRI)"),
               tags$p("Los Baños, Laguna 4031, Philippines"),
               tags$p("Phone: +63 (2) 8580 5600 ext. 2743"),
-              tags$p("Email: v.scheplerluu@irri.org")
+              tags$p("Email: v.scheplerluu@cgiar.org")
 
        ),
        column(6,
@@ -420,7 +437,7 @@ ui <- navbarPage(
               tags$p("Rice Breeding Innovation Department (RBI)"),
               tags$p("International Rice Research Institute (IRRI)"),
               tags$p("Los Baños, Laguna 4031, Philippines"),
-              tags$p("Email: d.pinili@irri.org")
+              tags$p("Email: d.pinili@cgiar.org")
 
        )
      )
@@ -1113,7 +1130,8 @@ server <- function(input, output, session) {
 
       # Filter the data for the selected country
       data_effectivity_per_country <- country_effectiveness %>%
-        filter(country == input$country, Xa_gene %in% selected_genes)
+        filter(country == input$country, Xa_gene %in% selected_genes)%>%
+        mutate(counry = ifelse(country == "United Republic of Tanzania", "Tanzania", country))
 
       # Reorder Xa_gene factor by effectiveness in descending order
       data_effectivity_per_country <- data_effectivity_per_country %>%
