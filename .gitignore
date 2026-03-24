@@ -1,0 +1,12 @@
+# Data files — keep private, do not publish to GitHub
+data/
+
+# R session artifacts
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# OS artifacts
+.DS_Store
+Thumbs.db
