@@ -126,9 +126,9 @@ region_effectiveness <- xa_prediction %>%
   group_by(Region, Xa_gene) %>%
   summarize(
     effectiveness = weighted.mean(Percent, n),
+    ci_lower = weighted.mean(ci_lower, n),
+    ci_upper = weighted.mean(ci_upper, n),
     n = sum(n),
-    ci_lower = min(ci_lower),
-    ci_upper = max(ci_upper),
     .groups = "drop"
   ) %>%
   arrange(desc(effectiveness))
@@ -138,9 +138,9 @@ region_effectiveness_year <- xa_prediction_year %>%
   group_by(Region, Xa_gene, Year) %>%
   summarize(
     effectiveness = weighted.mean(Percent, n),
+    ci_lower = weighted.mean(ci_lower, n),
+    ci_upper = weighted.mean(ci_upper, n),
     n = sum(n),
-    ci_lower = min(ci_lower),
-    ci_upper = max(ci_upper),
     .groups = "drop"
   ) %>%
   arrange(Region, Xa_gene, Year)
@@ -1234,7 +1234,7 @@ server <- function(input, output, session) {
         hc_yAxis(title = list(text = "Predicted Effectiveness (%)"), min = 0, max = 100) %>%
         hc_add_series(
           name = "Effectiveness",
-          data = mapply(function(y, low, high) list(y = y, low = low, high = high),
+          data = mapply(function(y, ci_lo, ci_hi) list(y = y, ci_lower = ci_lo, ci_upper = ci_hi),
                         hc_data$effectiveness, hc_data$ci_lower, hc_data$ci_upper,
                         SIMPLIFY = FALSE),
           type = "column",
@@ -1248,7 +1248,7 @@ server <- function(input, output, session) {
           type = "errorbar",
           linkedTo = ":previous"
         ) %>%
-        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y:.1f}%</b><br/>95% CI: {point.low:.1f}% – {point.high:.1f}%") %>%
+        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y:.1f}%</b><br/>95% CI: {point.ci_lower:.1f}% \u2013 {point.ci_upper:.1f}%") %>%
         hc_legend(enabled = FALSE) %>%
         hc_colors(c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346", "#efdf48", "#f9a52c", "#d64e12"))
     })
@@ -1387,14 +1387,15 @@ server <- function(input, output, session) {
 
       for (gene in unique(trend_data$Xa_gene)) {
         gene_data <- trend_data %>% filter(Xa_gene == gene)
+        gene_color <- unname(rgene_colors[gene])
         hc <- hc %>%
           hc_add_series(
             name = gene,
-            data = mapply(function(x, y, low, high) list(x = x, y = y, low = low, high = high),
-                          gene_data$Year, gene_data$effectiveness,
-                          gene_data$ci_lower, gene_data$ci_upper,
+            data = mapply(function(x, y) list(x = x, y = y),
+                          gene_data$Year, gene_data$Percent,
                           SIMPLIFY = FALSE),
-            type = "line"
+            type = "line",
+            color = gene_color
           ) %>%
           hc_add_series(
             name = paste(gene, "95% CI"),
@@ -1403,6 +1404,7 @@ server <- function(input, output, session) {
                           SIMPLIFY = FALSE),
             type = "arearange",
             linkedTo = ":previous",
+            color = gene_color,
             fillOpacity = 0.2,
             lineWidth = 0
           )
@@ -1516,7 +1518,7 @@ server <- function(input, output, session) {
         hc_yAxis(title = list(text = "Predicted Effectiveness (%)"), min = 0, max = 100) %>%
         hc_add_series(
           name = "Effectiveness",
-          data = mapply(function(y, low, high) list(y = y, low = low, high = high),
+          data = mapply(function(y, ci_lo, ci_hi) list(y = y, ci_lower = ci_lo, ci_upper = ci_hi),
                         eff_data$effectiveness, eff_data$ci_lower, eff_data$ci_upper,
                         SIMPLIFY = FALSE),
           type = "column", colorByPoint = TRUE
@@ -1528,7 +1530,7 @@ server <- function(input, output, session) {
                         SIMPLIFY = FALSE),
           type = "errorbar", linkedTo = ":previous"
         ) %>%
-        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y:.1f}%</b><br/>95% CI: {point.low:.1f}% – {point.high:.1f}%") %>%
+        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y:.1f}%</b><br/>95% CI: {point.ci_lower:.1f}% \u2013 {point.ci_upper:.1f}%") %>%
         hc_legend(enabled = FALSE) %>%
         hc_colors(c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346", "#efdf48", "#f9a52c", "#d64e12"))
     })
@@ -1576,14 +1578,15 @@ server <- function(input, output, session) {
 
       for (gene in unique(trend_data$Xa_gene)) {
         gene_data <- trend_data %>% filter(Xa_gene == gene)
+        gene_color <- unname(rgene_colors[gene])
         hc <- hc %>%
           hc_add_series(
             name = gene,
-            data = mapply(function(x, y, low, high) list(x = x, y = y, low = low, high = high),
+            data = mapply(function(x, y) list(x = x, y = y),
                           gene_data$Year, gene_data$effectiveness,
-                          gene_data$ci_lower, gene_data$ci_upper,
                           SIMPLIFY = FALSE),
-            type = "line"
+            type = "line",
+            color = gene_color
           ) %>%
           hc_add_series(
             name = paste(gene, "95% CI"),
@@ -1592,6 +1595,7 @@ server <- function(input, output, session) {
                           SIMPLIFY = FALSE),
             type = "arearange",
             linkedTo = ":previous",
+            color = gene_color,
             fillOpacity = 0.2,
             lineWidth = 0
           )
