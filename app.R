@@ -21,7 +21,6 @@ library(stringr)
 rice_data <- read.csv("data/latest-data-loading-28May-2024/all_rice_bb_data_20May2025.csv")
 rice_data$year <- as.numeric(rice_data$year)
 rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
-rice_data$AxooPopn <- as.character(rice_data$AxooPopn)
 rice_data$AxooPopn <- trimws(rice_data$AxooPopn)   # Remove any leading/trailing whitespace
 
 # Load the recommended genes
@@ -30,6 +29,13 @@ recommended_genes_data <- read_csv("data/recommended_genes.csv") # based on prio
 # Get gene effectiveness frequency
 genes_frequency_data <- read.csv('data/latest-data-loading-28May-2024/293_IRBBfreq.csv')
 com_xa3_data <- read.csv('data/latest-data-loading-28May-2024/com_xa3.csv')
+
+# Load predicted Xa gene effectiveness data (ensemble learning predictions)
+xa_prediction <- read.csv("data/Re_ update PathoTRacer with new data/PathoTracer_Xaprediction.csv") %>%
+  rename(Xa_gene = Gene, country = Country)
+
+xa_prediction_year <- read.csv("data/Re_ update PathoTRacer with new data/PathoTracer_Xaprediction_year.csv") %>%
+  rename(Xa_gene = Gene, country = Country)
 
 # Load the recommended varieties
 recommended_variety<- read.csv('data/BLB-varieties-recom.csv')
@@ -105,13 +111,39 @@ country_data <- joined_data %>%
   summarise(Value = mean(Value)) %>%
   ungroup()
 
-# Aggregate data to calculate average effectiveness per country and Xa_gene,
-# and count the number of isolates
-country_effectiveness <- com_xa3_data %>%
-  group_by(country, Xa_gene) %>%
-  summarise(effectiveness = sum(perc, na.rm = TRUE),
-            num_isolates = n()) %>%
+# Country-to-region lookup from prediction data
+country_region_lookup <- xa_prediction %>%
+  distinct(country, Region)
+
+# Use predicted Xa gene effectiveness from ensemble model (replaces empirical com_xa3 data)
+country_effectiveness <- xa_prediction %>%
+  mutate(effectiveness = Percent) %>%
+  select(country, Xa_gene, effectiveness, ci_lower, ci_upper, n) %>%
   arrange(desc(effectiveness))
+
+# Region-level effectiveness (weighted mean across countries in the region)
+region_effectiveness <- xa_prediction %>%
+  group_by(Region, Xa_gene) %>%
+  summarize(
+    effectiveness = weighted.mean(Percent, n),
+    n = sum(n),
+    ci_lower = min(ci_lower),
+    ci_upper = max(ci_upper),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(effectiveness))
+
+# Region-level effectiveness by year
+region_effectiveness_year <- xa_prediction_year %>%
+  group_by(Region, Xa_gene, Year) %>%
+  summarize(
+    effectiveness = weighted.mean(Percent, n),
+    n = sum(n),
+    ci_lower = min(ci_lower),
+    ci_upper = max(ci_upper),
+    .groups = "drop"
+  ) %>%
+  arrange(Region, Xa_gene, Year)
 
 
 # Aggregate data by year, country and pathogen popn
@@ -173,18 +205,6 @@ axoo_colors <- c(
 axoo_pal <- colorFactor(palette = axoo_colors, domain = names(axoo_colors))
 #axoo_pal <- colorFactor(palette = strain_colors, domain = strainlst)
 
-# Custom function to create cluster icons based on AxooPopn
-getClusterIcon <- function(AxooPopn) {
-  color <- ~axoo_pal(AxooPopn)
-  # Create a custom icon for the cluster based on AxooPopn
-  icon <- makeIcon(
-    iconUrl = paste0("https://dummyimage.com/24x24/", substr(color, 2, 7), "/ffffff&text=+"), # Cluster color
-    iconWidth = 24,
-    iconHeight = 24
-  )
-  return(icon)
-}
-
 custom_theme <- theme(
   plot.title = element_text(size = 20, face = "bold", hjust = 0),  # Align title to left
   plot.margin = margin(t = 10, b = 10, l = 10, r = 10),
@@ -218,7 +238,7 @@ ui <- navbarPage(
   tags$head(
     tags$link(rel = "stylesheet", type = "text/css", href = "https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/leaflet.fullscreen.css"),
     tags$script(src = "https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/1.6.0/Leaflet.fullscreen.min.js"),
-    tags$link(rel = "stylesheet", type = "text/css", href = "style.css") # Include the CSS
+    tags$link(rel = "stylesheet", type = "text/css", href = "custom.css") # Include the CSS
   ),
 
   navbarMenu("Home",
@@ -320,8 +340,10 @@ ui <- navbarPage(
                   max = max(rice_data$year, na.rm = TRUE),
                   value = c(min(rice_data$year, na.rm = TRUE), max(rice_data$year, na.rm = TRUE))),
                 selectInput("country", "Select Country",
-                  choices = c(sort(unique(rice_data$country)))
-                )
+                  choices = c(sort(unique(rice_data$country))),
+                  selected = sort(unique(rice_data$country))[1]
+                ),
+                checkboxInput("cluster_country", "Cluster markers", value = TRUE)
               ),
               mainPanel(
                # Country Zoom
@@ -337,23 +359,17 @@ ui <- navbarPage(
                  ),
                  tabPanel("Effective Rgenes",
                     div(
-                      #class = "",
-                      #plotOutput("effectivity_rgene_per_country", height = "40vh")
                       selectInput(
                         inputId = "selected_genes",
                         label = "Select Rgenes:",
-                        choices = unique(country_effectiveness$Xa_gene),
+                        choices = sort(unique(country_effectiveness$Xa_gene)),
                         multiple = TRUE,
-                        selected = unique(country_effectiveness$Xa_gene)
+                        selected = sort(unique(country_effectiveness$Xa_gene))
                       ),
-
                       highchartOutput(outputId = "effectivity_rgene_per_country_hc")
                     ),
-                    div(
-                      class = "info-box",
-                      div( class = "info-content",
-                        tags$p("Estimation of effective Xa genes for a particular country were based on 293 genome-sequenced Asian Xoo isolates with pathotype data using near-isogenic lines IRBB4, IRBB5, IRBB7, IRBB10, IRBB13, IRBB14, and IRBB21. The isolates were grouped into their corresponding Asian Xoo subpopulations, and the proportion of resistant IRBB lines were used to estimate for the genotyped samples submitted by each country.")
-                      )
+                    div(class = "info-content",
+                      tags$p("Xa gene recommendation was based on gene effectiveness prediction from ensemble learning approach that used AXoo population and bioclimate as predictors. Tree-based (random forest, extreme gradient boosting) and neural network (single-task deep, multitask deep, mixture of experts) methods were stacked using Firth logistic regression as meta-learner to produce predicted probabilities of the seven Xa genes per Xoo isolate. Gene effectiveness is then measured as the mean predicted probability per gene. For uncertainty measurement of prediction, 95% confidence interval is shown as error bars.")
                     )
                  ),
                  tabPanel("Varieties with Rgenes",
@@ -371,30 +387,112 @@ ui <- navbarPage(
                       #downloadButton("download_varieties", "Download CSV"),  # Add download button
                       tags$br()
                     ),
-                    div(
-                      class = "info-box",
-                      div( class = "info-content",
-                           tags$br(),
-                           tags$p("The list of varieties were prepared by curating varieties with whole genome sequence and md-density marker genotyping results using key traits of interest, in this case,the presence or absence of favorable alleles associated with resistance genes for bacterial blight. "),
-                           tags$p("To know more about this table, please refer to the "
+                    div(class = "info-content",
+                      tags$br(),
+                      tags$p("The list of varieties were prepared by curating varieties with whole genome sequence and md-density marker genotyping results using key traits of interest, in this case,the presence or absence of favorable alleles associated with resistance genes for bacterial blight. "),
+                      tags$p("To know more about this table, please refer to the "
 ,tags$a(href="https://rbi.irri.org/resources-and-tools/qtl-profiles","QTL Profiles page."))
-                      )
                     )
                  ),
                  tabPanel("Genotyped Samples",
                     div(
                       DTOutput("table", height = "80vh")
                     )
+                 ),
+                 tabPanel("Rgene Trends",
+                    div(
+                      selectInput(
+                        inputId = "selected_genes_pred",
+                        label = "Select Rgenes:",
+                        choices = sort(unique(xa_prediction_year$Xa_gene)),
+                        multiple = TRUE,
+                        selected = sort(unique(xa_prediction_year$Xa_gene))
+                      ),
+                      highchartOutput("xa_pred_trend_hc")
+                    )
                  )
-                 #tabPanel("Test",
-                 #    highchartOutput(outputId = "isolate_barchart_hc",  height = 500)
-                 #)
 
                ) # end of tabsetpanel
              ) # end of mainpanel
             ) #end of sidebarLayout
           ) # end of tabPanel for Country zooming
-        )  # end of contents of tabsetPabel (Overview and Country Filter)
+,
+          tabPanel("Per Region",
+            sidebarLayout(
+              sidebarPanel(
+                selectInput("region", "Select Region",
+                  choices = sort(unique(xa_prediction$Region)),
+                  selected = sort(unique(xa_prediction$Region))[1]
+                ),
+                checkboxInput("cluster_region", "Cluster markers", value = TRUE)
+              ),
+              mainPanel(
+                tabsetPanel(
+                  type = "pills",
+                  tabPanel("Map",
+                    leafletOutput("region_map", height = "80vh")
+                  ),
+                  tabPanel("Axoo Summary",
+                    plotOutput("region_axoo_plot", height = "40vh"),
+                    tags$br(),
+                    plotOutput("region_axoo_population_plot", height = "40vh")
+                  ),
+                  tabPanel("Effective Rgenes",
+                    div(
+                      selectInput(
+                        inputId = "selected_genes_region",
+                        label = "Select Rgenes:",
+                        choices = sort(unique(region_effectiveness$Xa_gene)),
+                        multiple = TRUE,
+                        selected = sort(unique(region_effectiveness$Xa_gene))
+                      ),
+                      highchartOutput(outputId = "region_effectiveness_hc")
+                    ),
+                    div(class = "info-content",
+                      tags$p("Xa gene recommendation was based on gene effectiveness prediction from ensemble learning approach that used AXoo population and bioclimate as predictors. Tree-based (random forest, extreme gradient boosting) and neural network (single-task deep, multitask deep, mixture of experts) methods were stacked using Firth logistic regression as meta-learner to produce predicted probabilities of the seven Xa genes per Xoo isolate. Gene effectiveness is then measured as the weighted mean predicted probability per gene across countries within the selected region. For uncertainty measurement of prediction, 95% confidence interval is shown as error bars.")
+                    )
+                  ),
+                  tabPanel("Varieties with Rgenes",
+                    div(
+                      selectInput(
+                        inputId = "selected_genes_region_var",
+                        label = "Select Rgenes:",
+                        choices = unique(blb_melted$Rgene),
+                        multiple = TRUE,
+                        selected = unique(blb_melted$Rgene)
+                      ),
+                      DTOutput("region_variety_gene_table"),
+                      tags$br()
+                    ),
+                    div(class = "info-content",
+                      tags$br(),
+                      tags$p("The list of varieties were prepared by curating varieties with whole genome sequence and md-density marker genotyping results using key traits of interest, in this case, the presence or absence of favorable alleles associated with resistance genes for bacterial blight."),
+                      tags$p("To know more about this table, please refer to the ",
+                        tags$a(href="https://rbi.irri.org/resources-and-tools/qtl-profiles", "QTL Profiles page."))
+                    )
+                  ),
+                  tabPanel("Genotyped Samples",
+                    div(
+                      DTOutput("region_table", height = "80vh")
+                    )
+                  ),
+                  tabPanel("Rgene Trends",
+                    div(
+                      selectInput(
+                        inputId = "selected_genes_region_pred",
+                        label = "Select Rgenes:",
+                        choices = sort(unique(region_effectiveness_year$Xa_gene)),
+                        multiple = TRUE,
+                        selected = sort(unique(region_effectiveness_year$Xa_gene))
+                      ),
+                      highchartOutput("region_trend_hc")
+                    )
+                  )
+                )
+              )
+            )
+          )  # end Per Region tab
+        )  # end of tabsetPanel (Overview, Per Country, Per Region)
       )#end of fluidPage for Bacterial Blight
     ),
 
@@ -977,7 +1075,7 @@ server <- function(input, output, session) {
         #filter(sovereignt %in% c(input$country))
         filter(name %in% c(input$country))
 
-      jitter_amount <- 0.00002
+      jitter_amount <- if (isTRUE(input$cluster_country)) 0.00002 else 0.05
       map_data<-rice_data %>%
         filter (rice_data$country %in% subset_countries)  %>%
         #filter(!is.na(latitude) & !is.na(longitude)) %>%
@@ -986,7 +1084,6 @@ server <- function(input, output, session) {
           jittered_lat = latitude + runif(n(), -jitter_amount, jitter_amount),  # Add jitter to latitude
           jittered_lng = longitude + runif(n(), -jitter_amount, jitter_amount)  # Add jitter to longitude
         )
-      print(map_data)
 
       if (nrow(map_data) > 0) {
         leaflet(map_data, options = leafletOptions(worldCopyJump = TRUE)) %>%
@@ -1017,12 +1114,12 @@ server <- function(input, output, session) {
             fillColor = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
             fillOpacity = 1,
             radius = 5,
-            clusterOptions = markerClusterOptions(
+            clusterOptions = if (isTRUE(input$cluster_country)) markerClusterOptions(
               showCoverageOnHover = TRUE,
               zoomToBoundsOnClick = TRUE,
               spiderfyOnMaxZoom = TRUE,
               animate = TRUE
-            )
+            ) else NULL
           )  %>%
           addLegend(position = "topright", pal = colorFactor(palette = strain_colors, domain = rice_data$AxooPopn),
                     values = ~AxooPopn, title = "Pathogen population",
@@ -1112,48 +1209,46 @@ server <- function(input, output, session) {
         )
     })
 
-    # Ensure selected genes are limited to 3 globally
-    #selected_genes <- reactive({
-    #  if (length(input$selected_genes) > 3) {
-    #    input$selected_genes[1:3]
-    #  } else {
-    #    input$selected_genes
-    #  }
-    #})
-
-    #------- test HC library---------------------------------#
+    #------- HC effectivity chart with CI error bars ---------------------------------#
     output$effectivity_rgene_per_country_hc <- renderHighchart({
+      req(input$country, input$selected_genes)
       selected_genes <- input$selected_genes
-      #if (length(selected_genes) > 3) {
-      #  selected_genes <- selected_genes[1:3]
-      #}
 
       # Filter the data for the selected country
       data_effectivity_per_country <- country_effectiveness %>%
-        filter(country == input$country, Xa_gene %in% selected_genes)%>%
-        mutate(counry = ifelse(country == "United Republic of Tanzania", "Tanzania", country))
-
-      # Reorder Xa_gene factor by effectiveness in descending order
-      data_effectivity_per_country <- data_effectivity_per_country %>%
+        filter(country == input$country, Xa_gene %in% selected_genes) %>%
         mutate(Xa_gene = fct_reorder(Xa_gene, effectiveness, .desc = TRUE))
 
-      # Prepare data for Highcharts
-      hc_data <- data_effectivity_per_country %>%
-        select(Xa_gene, effectiveness) %>%
-        arrange(desc(effectiveness))
+      if (nrow(data_effectivity_per_country) == 0) {
+        return(highchart() %>%
+          hc_title(text = paste("No data available for", input$country)) %>%
+          hc_xAxis(visible = FALSE) %>% hc_yAxis(visible = FALSE))
+      }
 
-      # Highcharts bar plot
+      hc_data <- data_effectivity_per_country %>% arrange(desc(effectiveness))
+
       highchart() %>%
         hc_chart(type = "column") %>%
-        hc_title(text = "Effectiveness of Xa-genes per Country") %>%
-        hc_xAxis(categories = hc_data$Xa_gene, title = list(text = "Xa Genes")) %>%
-        hc_yAxis(title = list(text = "Frequency of Avirulent Isolates")) %>%
+        hc_title(text = paste("Xa Gene Effectiveness —", input$country)) %>%
+        hc_xAxis(categories = as.character(hc_data$Xa_gene), title = list(text = "Xa Genes")) %>%
+        hc_yAxis(title = list(text = "Predicted Effectiveness (%)"), min = 0, max = 100) %>%
         hc_add_series(
           name = "Effectiveness",
-          data = hc_data$effectiveness,
+          data = mapply(function(y, low, high) list(y = y, low = low, high = high),
+                        hc_data$effectiveness, hc_data$ci_lower, hc_data$ci_upper,
+                        SIMPLIFY = FALSE),
+          type = "column",
           colorByPoint = TRUE
         ) %>%
-        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y}</b>") %>%
+        hc_add_series(
+          name = "95% CI",
+          data = mapply(function(low, high) list(low = low, high = high),
+                        hc_data$ci_lower, hc_data$ci_upper,
+                        SIMPLIFY = FALSE),
+          type = "errorbar",
+          linkedTo = ":previous"
+        ) %>%
+        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y:.1f}%</b><br/>95% CI: {point.low:.1f}% – {point.high:.1f}%") %>%
         hc_legend(enabled = FALSE) %>%
         hc_colors(c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346", "#efdf48", "#f9a52c", "#d64e12"))
     })
@@ -1272,6 +1367,237 @@ server <- function(input, output, session) {
       output$isolate_barchart_hc()
     })
 
+    # ---- Per Country: Rgene Trends over time ----
+    output$xa_pred_trend_hc <- renderHighchart({
+      req(input$country, input$selected_genes_pred)
+      trend_data <- xa_prediction_year %>%
+        filter(country == input$country, Xa_gene %in% input$selected_genes_pred) %>%
+        arrange(Year)
+
+      if (nrow(trend_data) == 0) {
+        return(highchart() %>%
+          hc_title(text = paste("No trend data available for", input$country)) %>%
+          hc_xAxis(visible = FALSE) %>% hc_yAxis(visible = FALSE))
+      }
+
+      hc <- highchart() %>%
+        hc_title(text = paste("Rgene Effectiveness Trend —", input$country)) %>%
+        hc_xAxis(title = list(text = "Year")) %>%
+        hc_yAxis(title = list(text = "Predicted Effectiveness (%)"), min = 0, max = 100)
+
+      for (gene in unique(trend_data$Xa_gene)) {
+        gene_data <- trend_data %>% filter(Xa_gene == gene)
+        hc <- hc %>%
+          hc_add_series(
+            name = gene,
+            data = mapply(function(x, y, low, high) list(x = x, y = y, low = low, high = high),
+                          gene_data$Year, gene_data$effectiveness,
+                          gene_data$ci_lower, gene_data$ci_upper,
+                          SIMPLIFY = FALSE),
+            type = "line"
+          ) %>%
+          hc_add_series(
+            name = paste(gene, "95% CI"),
+            data = mapply(function(x, low, high) list(x = x, low = low, high = high),
+                          gene_data$Year, gene_data$ci_lower, gene_data$ci_upper,
+                          SIMPLIFY = FALSE),
+            type = "arearange",
+            linkedTo = ":previous",
+            fillOpacity = 0.2,
+            lineWidth = 0
+          )
+      }
+      hc
+    })
+
+    # ---- Per Region: reactive filter ----
+    filtered_region_data <- reactive({
+      req(input$region)
+      countries_in_region <- country_region_lookup %>%
+        filter(Region == input$region) %>%
+        pull(country)
+      rice_data %>% filter(country %in% countries_in_region)
+    })
+
+    # ---- Per Region: Map ----
+    output$region_map <- renderLeaflet({
+      req(input$region)
+      countries_in_region <- country_region_lookup %>%
+        filter(Region == input$region) %>%
+        pull(country)
+
+      subset_region <- world %>% filter(name %in% countries_in_region)
+
+      jitter_amount_region <- if (isTRUE(input$cluster_region)) 0.00002 else 0.05
+      map_data_region <- rice_data %>%
+        filter(country %in% countries_in_region) %>%
+        mutate(
+          jittered_lat = latitude + runif(n(), -jitter_amount_region, jitter_amount_region),
+          jittered_lng = longitude + runif(n(), -jitter_amount_region, jitter_amount_region)
+        )
+
+      if (nrow(map_data_region) == 0) {
+        return(leaflet() %>%
+          addProviderTiles("CartoDB.Positron") %>%
+          setView(lng = 0, lat = 0, zoom = 4) %>%
+          addPopups(lng = 0, lat = 0, "No data available for selected region"))
+      }
+
+      leaflet(map_data_region, options = leafletOptions(worldCopyJump = TRUE)) %>%
+        addProviderTiles("CartoDB.Positron", options = providerTileOptions(minZoom = 3)) %>%
+        setView(lng = mean(map_data_region$longitude, na.rm = TRUE),
+                lat = mean(map_data_region$latitude, na.rm = TRUE), zoom = 5) %>%
+        addPolygons(
+          data = subset_region,
+          color = "#444444", weight = 1, opacity = 1,
+          fillOpacity = 0.4, fillColor = "#a8d5a2", popup = ~name
+        ) %>%
+        addCircleMarkers(
+          data = map_data_region,
+          lng = ~jittered_lng, lat = ~jittered_lat,
+          popup = ~paste("Isolate Name:", isolatename,
+                         "<br/>Axoo Population:", AxooPopn,
+                         "<br/>Country:", country,
+                         "<br/>Year collected:", year),
+          color = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
+          fillColor = ~colorFactor(palette = strain_colors, domain = rice_data$AxooPopn)(AxooPopn),
+          fillOpacity = 1, radius = 5,
+          clusterOptions = if (isTRUE(input$cluster_region)) markerClusterOptions(
+            showCoverageOnHover = TRUE, zoomToBoundsOnClick = TRUE,
+            spiderfyOnMaxZoom = TRUE, animate = TRUE
+          ) else NULL
+        ) %>%
+        addLegend(position = "topright",
+                  pal = colorFactor(palette = strain_colors, domain = rice_data$AxooPopn),
+                  values = ~AxooPopn, title = "Pathogen population", opacity = 1)
+    })
+
+    # ---- Per Region: Axoo Summary ----
+    output$region_axoo_plot <- renderPlot({
+      data_processed <- filtered_region_data() %>%
+        filter(!is.na(AxooPopn)) %>%
+        group_by(country, AxooPopn) %>%
+        summarise(count = n(), .groups = "drop") %>%
+        mutate(percentage = count / sum(count) * 100)
+
+      ggplot(data_processed, aes(y = country, x = percentage, fill = AxooPopn)) +
+        geom_bar(stat = "identity") +
+        labs(title = "Axoo population distribution by country",
+             y = "Country", x = "Percent Distribution (%)") +
+        scale_fill_manual(values = axoo_colors)
+    })
+
+    output$region_axoo_population_plot <- renderPlot({
+      ggplot(filtered_region_data(), aes(x = AxooPopn, fill = AxooPopn)) +
+        geom_bar() +
+        labs(title = "Total samples by pathogen population",
+             x = "Axoo population", y = "Count") +
+        scale_fill_manual(values = axoo_colors)
+    })
+
+    # ---- Per Region: Effective Rgenes ----
+    output$region_effectiveness_hc <- renderHighchart({
+      req(input$region, input$selected_genes_region)
+
+      eff_data <- region_effectiveness %>%
+        filter(Region == input$region, Xa_gene %in% input$selected_genes_region) %>%
+        mutate(Xa_gene = fct_reorder(Xa_gene, effectiveness, .desc = TRUE))
+
+      if (nrow(eff_data) == 0) {
+        return(highchart() %>%
+          hc_title(text = paste("No data available for", input$region)) %>%
+          hc_xAxis(visible = FALSE) %>% hc_yAxis(visible = FALSE))
+      }
+
+      highchart() %>%
+        hc_chart(type = "column") %>%
+        hc_title(text = paste("Xa Gene Effectiveness —", input$region)) %>%
+        hc_xAxis(categories = as.character(eff_data$Xa_gene), title = list(text = "Xa Genes")) %>%
+        hc_yAxis(title = list(text = "Predicted Effectiveness (%)"), min = 0, max = 100) %>%
+        hc_add_series(
+          name = "Effectiveness",
+          data = mapply(function(y, low, high) list(y = y, low = low, high = high),
+                        eff_data$effectiveness, eff_data$ci_lower, eff_data$ci_upper,
+                        SIMPLIFY = FALSE),
+          type = "column", colorByPoint = TRUE
+        ) %>%
+        hc_add_series(
+          name = "95% CI",
+          data = mapply(function(low, high) list(low = low, high = high),
+                        eff_data$ci_lower, eff_data$ci_upper,
+                        SIMPLIFY = FALSE),
+          type = "errorbar", linkedTo = ":previous"
+        ) %>%
+        hc_tooltip(pointFormat = "Effectiveness: <b>{point.y:.1f}%</b><br/>95% CI: {point.low:.1f}% – {point.high:.1f}%") %>%
+        hc_legend(enabled = FALSE) %>%
+        hc_colors(c("#9b5fe0", "#16a4d8", "#60dbe8", "#8bd346", "#efdf48", "#f9a52c", "#d64e12"))
+    })
+
+    # ---- Per Region: Varieties with Rgenes ----
+    output$region_variety_gene_table <- renderDT({
+      req(input$selected_genes_region_var)
+      merged_data <- recommended_genes_data %>%
+        inner_join(blb_melted, by = "Rgene") %>%
+        select(Rgene, Line, Cultivar.group, Cultivation.status) %>%
+        filter(Rgene %in% input$selected_genes_region_var)
+      datatable(merged_data, options = list(pageLength = 10))
+    })
+
+    # ---- Per Region: Genotyped Samples ----
+    output$region_table <- renderDT({
+      req(input$region)
+      countries_in_region <- country_region_lookup %>%
+        filter(Region == input$region) %>%
+        pull(country)
+      table_data <- rice_data %>%
+        filter(country %in% countries_in_region) %>%
+        distinct(databasecode, .keep_all = TRUE) %>%
+        select(isolatename, year, district, province, country, institute, lineage, AxooPopn)
+      datatable(table_data, options = list(autoWidth = FALSE, pageLength = 10))
+    })
+
+    # ---- Per Region: Rgene Trends ----
+    output$region_trend_hc <- renderHighchart({
+      req(input$region, input$selected_genes_region_pred)
+      trend_data <- region_effectiveness_year %>%
+        filter(Region == input$region, Xa_gene %in% input$selected_genes_region_pred) %>%
+        arrange(Year)
+
+      if (nrow(trend_data) == 0) {
+        return(highchart() %>%
+          hc_title(text = paste("No trend data available for", input$region)) %>%
+          hc_xAxis(visible = FALSE) %>% hc_yAxis(visible = FALSE))
+      }
+
+      hc <- highchart() %>%
+        hc_title(text = paste("Rgene Effectiveness Trend —", input$region)) %>%
+        hc_xAxis(title = list(text = "Year")) %>%
+        hc_yAxis(title = list(text = "Predicted Effectiveness (%)"), min = 0, max = 100)
+
+      for (gene in unique(trend_data$Xa_gene)) {
+        gene_data <- trend_data %>% filter(Xa_gene == gene)
+        hc <- hc %>%
+          hc_add_series(
+            name = gene,
+            data = mapply(function(x, y, low, high) list(x = x, y = y, low = low, high = high),
+                          gene_data$Year, gene_data$effectiveness,
+                          gene_data$ci_lower, gene_data$ci_upper,
+                          SIMPLIFY = FALSE),
+            type = "line"
+          ) %>%
+          hc_add_series(
+            name = paste(gene, "95% CI"),
+            data = mapply(function(x, low, high) list(x = x, low = low, high = high),
+                          gene_data$Year, gene_data$ci_lower, gene_data$ci_upper,
+                          SIMPLIFY = FALSE),
+            type = "arearange",
+            linkedTo = ":previous",
+            fillOpacity = 0.2,
+            lineWidth = 0
+          )
+      }
+      hc
+    })
 
 }
 

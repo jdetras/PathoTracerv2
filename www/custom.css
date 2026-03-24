@@ -1,42 +1,33 @@
 /* custom.css */
-.navbar {
-  background-color: #45a049 !important;
-}
-.navbar-default .navbar-nav > .active > a,
-.navbar-default .navbar-nav > .active > a:focus,
-.navbar-default .navbar-nav > .active > a:hover {
-  background-color: #45a049 !important;
-  color: white !important;
-}
-.navbar-default .navbar-nav > li > a {
-  color: white !important;
-}
-.navbar-default .navbar-nav > li > a:hover {
-  background-color: #45a049 !important;
-  color: white !important;
-}
-.navbar-default .navbar-brand {
-  color: white !important;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Roboto:wght@400;700&family=Merriweather:wght@400;700&family=Roboto+Slab:wght@400;700&family=Lora:wght@400;700&display=swap');
 
 .banner{
   background-color: #4CAF50;
 }
 
+/* Navbar font override — Bootstrap 5 selectors */
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .dropdown-item {
+  font-family: 'Merriweather', serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
 .banner-header {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Merriweather', serif;
   font-size: 65px;
 }
 
 .banner-text{
-  font-family: 'Roboto', sans-serif;
-  font-size: 40px;
-  
+  font-family: 'Merriweather', serif;
+  font-size: 1rem;
+  text-align: center;
 }
 
 .section-header{
   background-color: #4CAF50;
-  color: white; 
+  color: white;
   padding: 10px 0;
   font-family: 'Merriweather', sans-serif;
   font-size: 65px;
@@ -44,7 +35,6 @@
 
 body {
   position: relative;
-  font-family: 'Poppins', sans-serif;
 }
 
 .div-content {
@@ -98,7 +88,7 @@ body {
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
-            
+
 .title {
   font-family: 'Merriweather';
   font-size: 20px;
@@ -120,4 +110,72 @@ body {
 
 .tab-content {
   margin-top: 15px;
+}
+
+/* ---- Section & About Headers ---- */
+.about-section-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 15px;
+  font-family: 'Merriweather', serif;
+  font-size: 1.4em;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* ---- Info Box (green header bar) ---- */
+.info-box {
+  background-color: #00AF4F;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px 4px 0 0;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* ---- Info Content (standalone note box) ---- */
+.info-content {
+  background-color: #f0f8f0;
+  border: 1px solid #00AF4F !important;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 0.9em;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #000000;
+}
+
+/* ---- Contact Card ---- */
+.contact-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+}
+
+/* ---- View Chart Button ---- */
+.btn-view-chart {
+  background-color: #00AF4F;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 14px;
+}
+.btn-view-chart:hover {
+  background-color: #008c3e;
+  color: white;
+}
+
+/* ---- Custom Card ---- */
+.card-custom {
+  border-left: 4px solid #00AF4F;
+  background-color: #f9f9f9;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 12px;
 }
