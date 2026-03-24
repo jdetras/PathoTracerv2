@@ -343,7 +343,7 @@ ui <- navbarPage(
                   choices = c(sort(unique(rice_data$country))),
                   selected = sort(unique(rice_data$country))[1]
                 ),
-                checkboxInput("cluster_country", "Cluster markers", value = TRUE)
+                checkboxInput("cluster_country", "Cluster samples", value = TRUE)
               ),
               mainPanel(
                # Country Zoom
@@ -424,7 +424,7 @@ ui <- navbarPage(
                   choices = sort(unique(xa_prediction$Region)),
                   selected = sort(unique(xa_prediction$Region))[1]
                 ),
-                checkboxInput("cluster_region", "Cluster markers", value = TRUE)
+                checkboxInput("cluster_region", "Cluster samples", value = TRUE)
               ),
               mainPanel(
                 tabsetPanel(
